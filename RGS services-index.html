@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Services — RGS Labs™</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050505;--bg2:#0a0a0a;--bg3:#101010;--bg4:#161616;--border:#1a1a1a;--border2:#242424;--border3:#303030;--text:#efefef;--text2:#787878;--text3:#3d3d3d;--text4:#252525;--purple:#a855f7;--purple2:#7c3aed;--purple3:rgba(124,58,237,.12);--purple4:rgba(168,85,247,.06);--purple-glow:rgba(168,85,247,.18);--font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:1;mix-blend-mode:overlay}
+.cursor-dot{position:fixed;width:6px;height:6px;background:var(--purple);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s var(--ease),height .2s var(--ease),background .2s;will-change:left,top}
+.cursor-dot.hover{width:10px;height:10px;background:#c084fc}
+.cursor-dot.clicking{width:4px;height:4px;opacity:.7}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
+nav.scrolled{background:rgba(5,5,5,.92);backdrop-filter:blur(28px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;cursor:none}
+.nav-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.nav-logo-text span{color:var(--purple)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;font-weight:400;color:var(--text2);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s;cursor:none;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--purple);transition:width .3s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-toggle{display:flex;align-items:center;border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg2)}
+.lang-btn{font-size:11px;padding:5px 12px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-family:var(--font-b);font-weight:500;letter-spacing:.04em;transition:all .25s}
+.lang-btn.active{background:var(--purple2);color:#fff}
+.nav-cta{background:var(--purple2);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .25s;cursor:none;border:1px solid transparent;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);opacity:0;transition:opacity .2s}
+.nav-cta:hover::before{opacity:1}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(124,58,237,.4)}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.95);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+.stagger-1{transition-delay:.05s}.stagger-2{transition-delay:.12s}.stagger-3{transition-delay:.2s}
+section{padding:128px 48px;position:relative;z-index:2}
+.container{max-width:1100px;margin:0 auto}
+.sec-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.sec-title{font-family:var(--font-h);font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--text);margin-bottom:20px}
+.sec-sub{font-size:17px;color:var(--text2);max-width:540px;line-height:1.7;font-weight:300}
+.btn-primary{background:var(--purple2);color:#fff;padding:15px 34px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease);cursor:none;border:1px solid rgba(255,255,255,.1);display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(124,58,237,.45)}
+.btn-ghost{border:1px solid var(--border2);color:var(--text2);padding:15px 34px;border-radius:10px;font-size:15px;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease);cursor:none;background:rgba(255,255,255,.02);display:inline-block}
+.btn-ghost:hover{border-color:var(--border3);color:var(--text);transform:translateY(-2px)}
+
+/* PAGE HERO */
+.page-hero{min-height:55vh;display:flex;align-items:flex-end;padding:120px 48px 80px;position:relative;overflow:hidden;background:var(--bg2)}
+.page-hero-ambient{position:absolute;top:0;left:20%;width:700px;height:500px;background:radial-gradient(ellipse,rgba(124,58,237,.14),transparent 70%);pointer-events:none;animation:pulse 6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+.page-hero-content{max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:2}
+.page-hero-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.page-hero-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.page-hero-title{font-family:var(--font-h);font-size:clamp(48px,7vw,84px);font-weight:800;line-height:.92;letter-spacing:-.04em;color:var(--text);margin-bottom:24px}
+.page-hero-title em{font-style:normal;color:var(--text3);-webkit-text-stroke:1px var(--text4)}
+.page-hero-sub{font-size:17px;color:var(--text2);max-width:520px;line-height:1.7;font-weight:300}
+
+/* BRIEF BANNER */
+.brief-banner{background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 48px}
+.brief-banner-inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-start;gap:20px}
+.brief-banner-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.brief-banner-text{font-size:14px;color:var(--text2);line-height:1.7;font-weight:300}
+.brief-banner-text strong{color:var(--text);font-weight:500}
+
+/* SERVICES LIST */
+#services-main{background:var(--bg)}
+.svc-list{margin-top:64px;border-top:1px solid var(--border)}
+.svc-row{display:grid;grid-template-columns:72px 1fr 160px;align-items:center;padding:36px 0;border-bottom:1px solid var(--border);gap:40px;transition:all .3s var(--ease);cursor:default;position:relative}
+.svc-row::before{content:'';position:absolute;left:-48px;right:-48px;top:0;bottom:0;background:var(--purple4);opacity:0;transition:opacity .3s}
+.svc-row:hover::before{opacity:1}
+.svc-row:hover .svc-name{color:var(--purple)}
+.svc-row:hover .svc-arrow{opacity:1;transform:translateX(0)}
+.svc-num{font-size:11px;color:var(--text3);font-family:var(--font-h);font-weight:600;letter-spacing:.12em;position:relative;z-index:1}
+.svc-body{position:relative;z-index:1}
+.svc-name{font-family:var(--font-h);font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.015em;transition:color .2s;margin-bottom:7px;display:flex;align-items:center;gap:12px}
+.svc-arrow{opacity:0;transform:translateX(-8px);transition:all .3s var(--ease);color:var(--purple);font-size:16px}
+.svc-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:300}
+.svc-price{text-align:right;position:relative;z-index:1}
+.svc-price-main{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text)}
+.svc-price-sub{font-size:11px;font-weight:400;color:var(--text3);font-family:var(--font-b);margin-top:4px;letter-spacing:.03em}
+.svc-includes{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.svc-include-tag{font-size:11px;color:var(--text3);border:1px solid var(--border);border-radius:4px;padding:3px 9px}
+
+/* BRAND IDENTITY expandable */
+.svc-row.brand-svc{cursor:pointer;user-select:none}
+.svc-row.brand-svc.open .svc-name{color:var(--purple)}
+.svc-chevron{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:1px solid var(--border2);border-radius:6px;font-size:11px;color:var(--text3);transition:all .35s var(--ease);flex-shrink:0;margin-left:4px}
+.svc-row.brand-svc.open .svc-chevron{transform:rotate(180deg);border-color:rgba(168,85,247,.4);color:var(--purple);background:var(--purple3)}
+.brand-expand{overflow:hidden;max-height:0;transition:max-height .7s var(--ease),opacity .4s var(--ease);opacity:0;border-bottom:1px solid var(--border)}
+.brand-expand.open{max-height:900px;opacity:1}
+.brand-expand-inner{padding:36px 0 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tier-card{border-radius:16px;padding:32px 26px;position:relative;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.tier-card:hover{transform:translateY(-5px)}
+.tier-signal{background:linear-gradient(135deg,#050e14,#071825);border:1px solid rgba(34,211,238,.2)}
+.tier-signal:hover{box-shadow:0 16px 48px rgba(34,211,238,.1)}
+.tier-signal .tier-glow{position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(34,211,238,.15),transparent 70%);pointer-events:none}
+.tier-signal .tier-accent{color:#22d3ee}
+.tier-signal .tier-bar{background:linear-gradient(90deg,#22d3ee,#0ea5e9);height:2px;border-radius:2px;margin-bottom:20px;width:40%}
+.tier-pulse{background:linear-gradient(135deg,#0c0514,#140a24);border:1px solid rgba(168,85,247,.3)}
+.tier-pulse:hover{box-shadow:0 16px 48px rgba(124,58,237,.18)}
+.tier-pulse .tier-glow{position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(168,85,247,.18),transparent 70%);pointer-events:none}
+.tier-pulse .tier-accent{color:var(--purple)}
+.tier-pulse .tier-bar{background:linear-gradient(90deg,var(--purple2),#a855f7);height:2px;border-radius:2px;margin-bottom:20px;width:65%}
+.tier-omni{background:linear-gradient(135deg,#0d0b06,#1a1508,#0e0a18);border:1px solid rgba(251,191,36,.25)}
+.tier-omni:hover{box-shadow:0 20px 60px rgba(251,191,36,.1),0 0 0 1px rgba(251,191,36,.15)}
+.tier-omni .tier-glow{position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(251,191,36,.12),rgba(168,85,247,.08) 50%,transparent 70%);pointer-events:none}
+.tier-omni .tier-accent{background:linear-gradient(90deg,#fbbf24,#f0e6ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tier-omni .tier-bar{background:linear-gradient(90deg,#fbbf24,#e879f9,#a855f7);height:2px;border-radius:2px;margin-bottom:20px;width:100%}
+.tier-omni .tier-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(90deg,rgba(251,191,36,.15),rgba(168,85,247,.15));border:1px solid rgba(251,191,36,.3);border-radius:100px;padding:4px 12px;color:#fbbf24;margin-bottom:16px}
+.tier-name{font-family:var(--font-h);font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+.tier-price{font-family:var(--font-h);font-size:17px;font-weight:700;margin-bottom:6px}
+.tier-price-sub{font-size:11px;color:var(--text3);margin-bottom:18px;font-weight:300}
+.tier-tag{font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;font-weight:400}
+.tier-items{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:26px}
+.tier-items li{font-size:13px;color:var(--text2);font-weight:300;line-height:1.5;display:flex;align-items:flex-start;gap:8px}
+.tier-items li::before{content:'›';font-size:14px;line-height:1.4;flex-shrink:0}
+.tier-signal .tier-items li::before{color:#22d3ee}
+.tier-pulse .tier-items li::before{color:var(--purple)}
+.tier-omni .tier-items li::before{color:#fbbf24}
+.tier-cta{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;font-family:var(--font-b);text-decoration:none;border-radius:8px;padding:11px 20px;transition:all .3s var(--ease);cursor:none;letter-spacing:.02em;width:100%;justify-content:center}
+.tier-signal .tier-cta{background:rgba(34,211,238,.1);color:#22d3ee;border:1px solid rgba(34,211,238,.25)}
+.tier-signal .tier-cta:hover{background:rgba(34,211,238,.18);border-color:rgba(34,211,238,.5);transform:translateY(-2px)}
+.tier-pulse .tier-cta{background:var(--purple3);color:var(--purple);border:1px solid rgba(168,85,247,.3)}
+.tier-pulse .tier-cta:hover{background:rgba(124,58,237,.2);border-color:var(--purple);transform:translateY(-2px)}
+.tier-omni .tier-cta{background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(168,85,247,.12));color:#f0d060;border:1px solid rgba(251,191,36,.3)}
+.tier-omni .tier-cta:hover{background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(168,85,247,.2));border-color:rgba(251,191,36,.5);transform:translateY(-2px)}
+
+/* PROCESS */
+#process{background:var(--bg2)}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);margin-top:72px}
+.proc-step{background:var(--bg);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s}
+.proc-step:hover{background:var(--bg3)}
+.proc-line{position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--border2);transition:background .3s}
+.proc-step:hover .proc-line{background:var(--purple)}
+.proc-num{font-size:10px;color:var(--purple);font-family:var(--font-h);font-weight:700;letter-spacing:.14em;margin-bottom:20px}
+.proc-title{font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px}
+.proc-desc{font-size:13px;color:var(--text2);line-height:1.7;font-weight:300}
+
+/* CTA */
+#services-cta{background:var(--bg);padding:100px 48px;text-align:center}
+.services-cta-inner{max-width:640px;margin:0 auto}
+.brief-note{font-size:13px;color:var(--text3);border:1px solid var(--border2);border-radius:10px;padding:18px 22px;margin:28px 0 36px;line-height:1.7;text-align:left}
+.brief-note strong{color:var(--text2);font-weight:500}
+.flex-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* LEGAL MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(12px)}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:700px;max-height:82vh;overflow-y:auto;padding:52px;transform:translateY(20px);transition:transform .4s var(--ease);scrollbar-width:thin;scrollbar-color:var(--border3) transparent}
+.modal-overlay.active .modal-box{transform:translateY(0)}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px}
+.modal-title{font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--text)}
+.modal-close{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;margin-left:20px}
+.modal-close:hover{border-color:var(--purple);color:var(--purple)}
+.modal-section{margin-bottom:28px}
+.modal-section h3{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.modal-section p,.modal-section li{font-size:14px;color:var(--text2);line-height:1.85;font-weight:300}
+.modal-section ul{padding-left:16px}
+.modal-section li{margin-bottom:7px}
+.modal-divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:52px 48px;position:relative;z-index:2}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px}
+.footer-brand{display:flex;flex-direction:column;gap:14px}
+.footer-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.footer-logo-text span{color:var(--purple)}
+.footer-tagline{font-size:13px;color:var(--text3);line-height:1.7;max-width:200px}
+.footer-socials{display:flex;gap:10px;align-items:center}
+.social-link{width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s var(--ease);position:relative;overflow:hidden}
+.social-link::before{content:'';position:absolute;inset:0;background:var(--purple3);opacity:0;transition:opacity .3s}
+.social-link:hover{border-color:rgba(168,85,247,.4);transform:translateY(-3px);box-shadow:0 8px 24px rgba(124,58,237,.25)}
+.social-link:hover::before{opacity:1}
+.social-link svg{width:16px;height:16px;fill:var(--text3);transition:fill .2s;position:relative;z-index:1}
+.social-link:hover svg{fill:var(--purple)}
+.footer-copy{font-size:11px;color:var(--text4);letter-spacing:.03em}
+.footer-col h4{font-family:var(--font-h);font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{font-size:13px;color:var(--text3);text-decoration:none;transition:color .2s;cursor:none}
+.footer-col ul a:hover{color:var(--text2)}
+
+@media(max-width:900px){
+  nav{padding:0 20px}.nav-links{display:none}
+  section{padding:80px 20px}.page-hero{padding:100px 20px 60px}
+  #services-cta{padding:80px 20px}
+  .brief-banner{padding:20px}
+  .svc-row{grid-template-columns:1fr;gap:8px}.svc-price{text-align:left}
+  .brand-expand-inner{grid-template-columns:1fr}
+  .proc-grid{grid-template-columns:1fr 1fr}
+  .footer-inner{grid-template-columns:1fr;gap:32px}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)"><div class="modal-box"><div class="modal-header"><div class="modal-title" id="modalTitle"></div><button class="modal-close" onclick="closeAllModals()">✕</button></div><div id="modalContent"></div></div></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-text">RGS<span>.</span>Labs™</div></a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+    <li><a href="about.html" data-en="About" data-es="Nosotros">About</a></li>
+    <li><a href="services.html" class="active" data-en="Services" data-es="Servicios">Services</a></li>
+    <li><a href="projects.html" data-en="Projects" data-es="Proyectos">Projects</a></li>
+    <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle"><button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button><button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button></div>
+    <a href="contact.html" class="nav-cta" data-en="Start a Project" data-es="Iniciar Proyecto">Start a Project</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-ambient"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-label" data-en="Our Services" data-es="Nuestros Servicios">Our Services</div>
+    <h1 class="page-hero-title" data-en="What we build<br><em>for you.</em>" data-es="Lo que construimos<br><em>para ti.</em>">What we build<br><em>for you.</em></h1>
+    <p class="page-hero-sub" data-en="Every service is designed as a strategic investment in your brand's digital presence — not a commodity purchase." data-es="Cada servicio está diseñado como una inversión estratégica en la presencia digital de tu marca — no una compra de commodity.">Every service is designed as a strategic investment in your brand's digital presence — not a commodity purchase.</p>
+  </div>
+</div>
+
+<div class="brief-banner">
+  <div class="brief-banner-inner">
+    <div class="brief-banner-icon">📋</div>
+    <div class="brief-banner-text"><strong data-en="PDF Brief Required for all projects — " data-es="Brief en PDF requerido para todos los proyectos — ">PDF Brief Required for all projects — </strong><span data-en="To ensure the highest quality results, clients must provide a complete PDF brief containing all project information, goals, references, content, assets and requirements before development begins." data-es="Para garantizar los mejores resultados, los clientes deben proporcionar un brief en PDF completo con toda la información del proyecto, objetivos, referencias, contenido, assets y requisitos antes de iniciar el desarrollo.">To ensure the highest quality results, clients must provide a complete PDF brief containing all project information, goals, references, content, assets and requirements before development begins.</span></div>
+  </div>
+</div>
+
+<section id="services-main">
+  <div class="container">
+    <div class="sec-label reveal" data-en="Services" data-es="Servicios">Services</div>
+    <h2 class="sec-title reveal" data-en="Five ways we<br>build your ecosystem." data-es="Cinco formas de<br>construir tu ecosistema.">Five ways we<br>build your ecosystem.</h2>
+    <div class="svc-list">
+
+      <div class="svc-row reveal">
+        <div class="svc-num">01</div>
+        <div class="svc-body">
+          <div class="svc-name" data-en="Landing Page" data-es="Landing Page">Landing Page<span class="svc-arrow">→</span></div>
+          <div class="svc-desc" data-en="Cinematic, high-converting landing pages designed to capture attention and drive real action for your brand." data-es="Landing pages cinematográficas de alta conversión, diseñadas para capturar atención y generar acción real para tu marca.">Cinematic, high-converting landing pages designed to capture attention and drive real action for your brand.</div>
+          <div class="svc-includes"><span class="svc-include-tag" data-en="Custom design" data-es="Diseño personalizado">Custom design</span><span class="svc-include-tag" data-en="Mobile responsive" data-es="Mobile responsive">Mobile responsive</span><span class="svc-include-tag" data-en="2 revisions" data-es="2 revisiones">2 revisions</span></div>
+        </div>
+        <div class="svc-price"><div class="svc-price-main">$50–120</div><div class="svc-price-sub" data-en="USD per project" data-es="USD por proyecto">USD per project</div></div>
+      </div>
+
+      <div class="svc-row reveal">
+        <div class="svc-num">02</div>
+        <div class="svc-body">
+          <div class="svc-name" data-en="Professional Website" data-es="Sitio Web Profesional">Professional Website<span class="svc-arrow">→</span></div>
+          <div class="svc-desc" data-en="Full-scale websites with premium UI/UX, custom animations and complete brand integration built to grow with you." data-es="Sitios web completos con UI/UX premium, animaciones personalizadas e integración total de marca, construidos para crecer contigo.">Full-scale websites with premium UI/UX, custom animations and complete brand integration built to grow with you.</div>
+          <div class="svc-includes"><span class="svc-include-tag" data-en="Multi-page" data-es="Multi-página">Multi-page</span><span class="svc-include-tag" data-en="Animations" data-es="Animaciones">Animations</span><span class="svc-include-tag" data-en="Brand integration" data-es="Integración de marca">Brand integration</span><span class="svc-include-tag" data-en="2 revisions" data-es="2 revisiones">2 revisions</span></div>
+        </div>
+        <div class="svc-price"><div class="svc-price-main">$150–400</div><div class="svc-price-sub">USD per project</div></div>
+      </div>
+
+      <div class="svc-row reveal">
+        <div class="svc-num">03</div>
+        <div class="svc-body">
+          <div class="svc-name" data-en="AI Business Assistant" data-es="Asistente IA para Negocios">AI Business Assistant<span class="svc-arrow">→</span></div>
+          <div class="svc-desc" data-en="Custom AI chatbots trained for your brand voice, integrated directly into your website or digital presence." data-es="Chatbots de IA personalizados, entrenados con la voz de tu marca e integrados directamente en tu sitio web o presencia digital.">Custom AI chatbots trained for your brand voice, integrated directly into your website or digital presence.</div>
+          <div class="svc-includes"><span class="svc-include-tag" data-en="Brand trained" data-es="Entrenado con tu marca">Brand trained</span><span class="svc-include-tag" data-en="Web integration" data-es="Integración web">Web integration</span><span class="svc-include-tag" data-en="Add-on service" data-es="Servicio adicional">Add-on service</span></div>
+        </div>
+        <div class="svc-price"><div class="svc-price-main">+$30–100</div><div class="svc-price-sub" data-en="USD · add-on" data-es="USD · adicional">USD · add-on</div></div>
+      </div>
+
+      <div class="svc-row reveal">
+        <div class="svc-num">04</div>
+        <div class="svc-body">
+          <div class="svc-name" data-en="QR Business Card" data-es="Tarjeta de Presentación QR">QR Business Card<span class="svc-arrow">→</span></div>
+          <div class="svc-desc" data-en="Smart digital business cards with QR codes linking directly to your brand's digital hub — a modern first impression." data-es="Tarjetas de presentación digitales inteligentes con QR que conectan al hub digital de tu marca — una primera impresión moderna.">Smart digital business cards with QR codes linking directly to your brand's digital hub — a modern first impression.</div>
+          <div class="svc-includes"><span class="svc-include-tag" data-en="Custom design" data-es="Diseño personalizado">Custom design</span><span class="svc-include-tag" data-en="QR integration" data-es="Integración QR">QR integration</span></div>
+        </div>
+        <div class="svc-price"><div class="svc-price-main">$15–40</div><div class="svc-price-sub">USD per project</div></div>
+      </div>
+
+      <!-- BRAND IDENTITY SYSTEM -->
+      <div class="svc-row brand-svc reveal" onclick="toggleBrand(this)" id="brandRow">
+        <div class="svc-num">05</div>
+        <div class="svc-body">
+          <div class="svc-name"><span data-en="Brand Identity System" data-es="Sistema de Identidad de Marca">Brand Identity System</span><span class="svc-chevron">▾</span></div>
+          <div class="svc-desc" data-en="Not just a logo. A complete perception architecture — presence, structure, authority and digital coherence built to scale your brand across every channel." data-es="No solo un logo. Una arquitectura de percepción completa — presencia, estructura, autoridad y coherencia digital construida para escalar tu marca en cada canal.">Not just a logo. A complete perception architecture — presence, structure, authority and digital coherence built to scale your brand across every channel.</div>
+        </div>
+        <div class="svc-price"><div class="svc-price-main" data-en="3 Tiers" data-es="3 Niveles">3 Tiers</div><div class="svc-price-sub" data-en="Click to explore" data-es="Click para explorar">Click to explore</div></div>
+      </div>
+
+      <div class="brand-expand" id="brandExpand">
+        <div class="brand-expand-inner">
+          <div class="tier-card tier-signal reveal-scale stagger-1">
+            <div class="tier-glow"></div>
+            <div class="tier-bar"></div>
+            <div class="tier-name tier-accent">SIGNAL</div>
+            <div class="tier-price tier-accent">From $100 USD</div>
+            <div class="tier-price-sub" data-en="Starting price · scope-dependent" data-es="Precio base · depende del alcance">Starting price · scope-dependent</div>
+            <div class="tier-tag" data-en="The start of the ecosystem" data-es="El inicio del ecosistema">The start of the ecosystem</div>
+            <ul class="tier-items">
+              <li data-en="Core visual brand structure" data-es="Estructura visual básica de marca">Core visual brand structure</li>
+              <li data-en="Professional client response copies" data-es="Copies profesionales para clientes">Professional client response copies</li>
+              <li data-en="WhatsApp / sales messaging system" data-es="Sistema de mensajes para ventas">WhatsApp / sales messaging system</li>
+              <li data-en="Communication coherence setup" data-es="Coherencia de comunicación">Communication coherence setup</li>
+              <li data-en="Initial professional perception system" data-es="Sistema inicial de percepción profesional">Initial professional perception system</li>
+            </ul>
+            <a href="contact.html" class="tier-cta" data-en="Get SIGNAL →" data-es="Obtener SIGNAL →">Get SIGNAL →</a>
+          </div>
+          <div class="tier-card tier-pulse reveal-scale stagger-2">
+            <div class="tier-glow"></div>
+            <div class="tier-bar"></div>
+            <div class="tier-name tier-accent">PULSE</div>
+            <div class="tier-price tier-accent">From $220 USD</div>
+            <div class="tier-price-sub" data-en="Starting price · scope-dependent" data-es="Precio base · depende del alcance">Starting price · scope-dependent</div>
+            <div class="tier-tag" data-en="The premium system" data-es="El sistema premium">The premium system</div>
+            <ul class="tier-items">
+              <li data-en="Everything in SIGNAL" data-es="Todo lo de SIGNAL">Everything in SIGNAL</li>
+              <li data-en="Full content structure & copies" data-es="Estructura de contenidos y copies">Full content structure & copies</li>
+              <li data-en="Service closure scripts" data-es="Scripts de cierre de servicios">Service closure scripts</li>
+              <li data-en="Emotional communication architecture" data-es="Arquitectura emocional de comunicación">Emotional communication architecture</li>
+              <li data-en="Premium visual organization system" data-es="Sistema de organización visual premium">Premium visual organization system</li>
+              <li data-en="Digital authority framework" data-es="Marco de autoridad digital">Digital authority framework</li>
+            </ul>
+            <a href="contact.html" class="tier-cta" data-en="Get PULSE →" data-es="Obtener PULSE →">Get PULSE →</a>
+          </div>
+          <div class="tier-card tier-omni reveal-scale stagger-3">
+            <div class="tier-glow"></div>
+            <div class="tier-badge">⬡ ULTRA PREMIUM</div>
+            <div class="tier-bar"></div>
+            <div class="tier-name tier-accent">OMNISTACK</div>
+            <div class="tier-price" style="background:linear-gradient(90deg,#fbbf24,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">From $450 USD</div>
+            <div class="tier-price-sub" data-en="Starting price · scope-dependent" data-es="Precio base · depende del alcance">Starting price · scope-dependent</div>
+            <div class="tier-tag" data-en="The complete ecosystem" data-es="El ecosistema completo">The complete ecosystem</div>
+            <ul class="tier-items">
+              <li data-en="Everything in SIGNAL + PULSE" data-es="Todo de SIGNAL + PULSE">Everything in SIGNAL + PULSE</li>
+              <li data-en="Full digital system integration" data-es="Integración completa de sistemas digitales">Full digital system integration</li>
+              <li data-en="Memberships & recurring payments" data-es="Membresías y pagos recurrentes">Memberships & recurring payments</li>
+              <li data-en="Digital product & storefront setup" data-es="Tienda y productos digitales">Digital product & storefront setup</li>
+              <li data-en="Premium experience architecture" data-es="Arquitectura de experiencias premium">Premium experience architecture</li>
+              <li data-en="Infrastructure built to scale" data-es="Infraestructura pensada para escalar">Infrastructure built to scale</li>
+            </ul>
+            <a href="contact.html" class="tier-cta" data-en="Get OMNISTACK →" data-es="Obtener OMNISTACK →">Get OMNISTACK →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="container">
+    <div class="sec-label reveal" data-en="Our Process" data-es="Nuestro Proceso">Our Process</div>
+    <h2 class="sec-title reveal" data-en="How we work." data-es="Cómo trabajamos.">How we work.</h2>
+    <div class="proc-grid">
+      <div class="proc-step reveal stagger-1"><div class="proc-line"></div><div class="proc-num">STEP 01</div><div class="proc-title" data-en="Contact" data-es="Contacto">Contact</div><div class="proc-desc" data-en="You reach out. We listen and define scope together." data-es="Tú contactas. Escuchamos y definimos el alcance juntos.">You reach out. We listen and define scope together.</div></div>
+      <div class="proc-step reveal stagger-2"><div class="proc-line"></div><div class="proc-num">STEP 02</div><div class="proc-title" data-en="PDF Brief + Deposit" data-es="Brief PDF + Anticipo">PDF Brief + Deposit</div><div class="proc-desc" data-en="You submit your complete PDF brief. 50% deposit confirms the project." data-es="Envías tu brief en PDF completo. 50% de anticipo confirma el proyecto.">You submit your complete PDF brief. 50% deposit confirms the project.</div></div>
+      <div class="proc-step reveal stagger-3"><div class="proc-line"></div><div class="proc-num">STEP 03</div><div class="proc-title" data-en="Build & Review" data-es="Desarrollo y Revisión">Build & Review</div><div class="proc-desc" data-en="We build and send a preview. Up to 2 revision rounds included." data-es="Construimos y enviamos un preview. Hasta 2 rondas de revisión incluidas.">We build and send a preview. Up to 2 revision rounds included.</div></div>
+      <div class="proc-step reveal stagger-3"><div class="proc-line"></div><div class="proc-num">STEP 04</div><div class="proc-title" data-en="Final Delivery" data-es="Entrega Final">Final Delivery</div><div class="proc-desc" data-en="Final payment. Your project goes live. Ready to make an impression." data-es="Pago final. Tu proyecto se publica. Listo para causar impresión.">Final payment. Your project goes live. Ready to make an impression.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="services-cta">
+  <div class="services-cta-inner">
+    <div class="sec-label reveal" style="justify-content:center">Start Today</div>
+    <h2 class="sec-title reveal" data-en="Ready to start<br>your project?" data-es="¿Listo para iniciar<br>tu proyecto?">Ready to start<br>your project?</h2>
+    <div class="brief-note reveal">
+      <strong data-en="📋 Before contacting: " data-es="📋 Antes de contactar: ">📋 Before contacting: </strong>
+      <span data-en="Prepare your PDF brief with your business information, project goals, references, content and assets. This ensures we can give you an accurate quote and start immediately." data-es="Prepara tu brief en PDF con información de tu negocio, objetivos del proyecto, referencias, contenido y assets. Esto nos permite darte una cotización precisa y empezar de inmediato.">Prepare your PDF brief with your business information, project goals, references, content and assets. This ensures we can give you an accurate quote and start immediately.</span>
+    </div>
+    <div class="flex-btns reveal">
+      <a href="contact.html" class="btn-primary" data-en="Start a Project" data-es="Iniciar un Proyecto">Start a Project</a>
+      <a href="mailto:rgslabs.contact@gmail.com" class="btn-ghost">rgslabs.contact@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo-text">RGS<span>.</span>Labs™</div>
+      <div class="footer-tagline">Modern technology ecosystem.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a href="https://gamejolt.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.5 17.5h-8v-7h8v7zm0-9h-8v-2h8v2zm5 9h-3v-4h-2v4h-1v-6h6v6zm0-8h-6v-3h6v3z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 RGS Labs™. All rights reserved.</div>
+    </div>
+    <div class="footer-col"><h4 data-en="Company" data-es="Empresa">Company</h4><ul><li><a href="about.html" data-en="About" data-es="Nosotros">About</a></li><li><a href="projects.html" data-en="Projects" data-es="Proyectos">Projects</a></li><li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li></ul></div>
+    <div class="footer-col"><h4 data-en="Services" data-es="Servicios">Services</h4><ul><li><a href="services.html">Landing Page</a></li><li><a href="services.html" data-en="Website" data-es="Sitio Web">Website</a></li><li><a href="services.html" data-en="AI Assistant" data-es="Asistente IA">AI Assistant</a></li><li><a href="services.html" data-en="Brand Identity" data-es="Identidad de Marca">Brand Identity</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a onclick="openModal('privacy')" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</a></li><li><a onclick="openModal('terms')" data-en="Terms of Service" data-es="Términos">Terms of Service</a></li><li><a onclick="openModal('payments')" data-en="Payment Policy" data-es="Pagos">Payment Policy</a></li><li><a onclick="openModal('revisions')" data-en="Revision Policy" data-es="Revisiones">Revision Policy</a></li></ul></div>
+  </div>
+</footer>
+
+<script>
+const dot=document.getElementById('cursorDot');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'});
+document.addEventListener('mousedown',()=>dot.classList.add('clicking'));
+document.addEventListener('mouseup',()=>dot.classList.remove('clicking'));
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>dot.classList.add('hover'));el.addEventListener('mouseleave',()=>dot.classList.remove('hover'))});
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
+const revObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el=>revObs.observe(el));
+let lang='en';
+function setLang(l){lang=l;document.getElementById('btnEN').classList.toggle('active',l==='en');document.getElementById('btnES').classList.toggle('active',l==='es');document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+l);if(v)el.innerHTML=v})}
+function toggleBrand(row){
+  const ex=document.getElementById('brandExpand');
+  const open=ex.classList.toggle('open');
+  row.classList.toggle('open',open);
+  if(open){setTimeout(()=>{ex.querySelectorAll('.reveal-scale').forEach(el=>{el.classList.remove('visible');setTimeout(()=>el.classList.add('visible'),60)})},100)}
+}
+const modals={privacy:{en:{title:'Privacy Policy',html:`<div class="modal-section"><h3>Data We Collect</h3><p>Only information you voluntarily provide: name, email, project details. Never shared with third parties.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Contact</h3><p>rgslabs.contact@gmail.com</p></div>`},es:{title:'Política de Privacidad',html:`<div class="modal-section"><h3>Datos que Recopilamos</h3><p>Solo información que proporcionas voluntariamente. Nunca compartida con terceros.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Contacto</h3><p>rgslabs.contact@gmail.com</p></div>`}},terms:{en:{title:'Terms of Service',html:`<div class="modal-section"><h3>PDF Brief Required</h3><p>All projects require a complete PDF brief before development begins. Delays from incomplete briefs are the client's responsibility.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Client Responsibility</h3><p>The client is solely responsible for the accuracy and legality of all content provided.</p></div>`},es:{title:'Términos de Servicio',html:`<div class="modal-section"><h3>Brief en PDF Requerido</h3><p>Todos los proyectos requieren un brief en PDF completo antes de iniciar.</p></div>`}},payments:{en:{title:'Payment Policy',html:`<div class="modal-section"><h3>Structure</h3><ul><li><strong>50% Deposit</strong> — Before work begins</li><li><strong>50% Final</strong> — Before delivery</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Refunds</h3><p>50% deposit is non-refundable once development begins.</p></div>`},es:{title:'Política de Pagos',html:`<div class="modal-section"><h3>Estructura</h3><ul><li><strong>50% Anticipo</strong> — Antes de comenzar</li><li><strong>50% Final</strong> — Antes de la entrega</li></ul></div>`}},revisions:{en:{title:'Revision Policy',html:`<div class="modal-section"><h3>Included</h3><p>Up to 2 revision rounds at no extra cost. Submit within 5 business days of preview.</p></div>`},es:{title:'Política de Revisiones',html:`<div class="modal-section"><h3>Incluido</h3><p>Hasta 2 rondas de revisión sin costo adicional.</p></div>`}}};
+function openModal(key){const m=modals[key][lang]||modals[key]['en'];document.getElementById('modalTitle').textContent=m.title;document.getElementById('modalContent').innerHTML=m.html;document.getElementById('modalOverlay').classList.add('active');document.body.style.overflow='hidden'}
+function closeAllModals(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow=''}
+function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeAllModals()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllModals()});
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Projects — RGS Labs™</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050505;--bg2:#0a0a0a;--bg3:#101010;--bg4:#161616;--border:#1a1a1a;--border2:#242424;--border3:#303030;--text:#efefef;--text2:#787878;--text3:#3d3d3d;--text4:#252525;--purple:#a855f7;--purple2:#7c3aed;--purple3:rgba(124,58,237,.12);--purple4:rgba(168,85,247,.06);--font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:1;mix-blend-mode:overlay}
+.cursor-dot{position:fixed;width:6px;height:6px;background:var(--purple);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s var(--ease),height .2s var(--ease),background .2s;will-change:left,top}
+.cursor-dot.hover{width:10px;height:10px;background:#c084fc}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
+nav.scrolled{background:rgba(5,5,5,.92);backdrop-filter:blur(28px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;cursor:none}
+.nav-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.nav-logo-text span{color:var(--purple)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;font-weight:400;color:var(--text2);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s;cursor:none;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--purple);transition:width .3s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-toggle{display:flex;align-items:center;border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg2)}
+.lang-btn{font-size:11px;padding:5px 12px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-family:var(--font-b);font-weight:500;letter-spacing:.04em;transition:all .25s}
+.lang-btn.active{background:var(--purple2);color:#fff}
+.nav-cta{background:var(--purple2);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .25s;cursor:none;border:1px solid transparent;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);opacity:0;transition:opacity .2s}
+.nav-cta:hover::before{opacity:1}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(124,58,237,.4)}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.stagger-1{transition-delay:.05s}.stagger-2{transition-delay:.12s}.stagger-3{transition-delay:.2s}
+section{padding:128px 48px;position:relative;z-index:2}
+.container{max-width:1100px;margin:0 auto}
+.sec-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.sec-title{font-family:var(--font-h);font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--text);margin-bottom:20px}
+.btn-primary{background:var(--purple2);color:#fff;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease);cursor:none;border:1px solid rgba(255,255,255,.1);display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(124,58,237,.4)}
+.btn-ghost{border:1px solid var(--border2);color:var(--text2);padding:13px 28px;border-radius:10px;font-size:14px;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease);cursor:none;background:rgba(255,255,255,.02);display:inline-flex;align-items:center;gap:8px}
+.btn-ghost:hover{border-color:var(--border3);color:var(--text);transform:translateY(-2px)}
+
+/* CASE STUDY MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(16px);overflow-y:auto}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:24px;width:100%;max-width:780px;padding:56px;transform:translateY(24px);transition:transform .4s var(--ease);position:relative;margin:auto}
+.modal-overlay.active .modal-box{transform:translateY(0)}
+.modal-close-btn{position:absolute;top:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close-btn:hover{border-color:var(--purple);color:var(--purple)}
+.cs-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);margin-bottom:16px;font-weight:600}
+.cs-title{font-family:var(--font-h);font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--text);letter-spacing:-.03em;line-height:1;margin-bottom:12px}
+.cs-tagline{font-size:15px;color:var(--text2);margin-bottom:40px;font-weight:300;line-height:1.6}
+.cs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);margin-bottom:36px}
+.cs-block{background:var(--bg3);padding:28px 24px}
+.cs-block-label{font-size:10px;color:var(--purple);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.cs-block-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px}
+.cs-block-text{font-size:13px;color:var(--text2);line-height:1.75;font-weight:300}
+.cs-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.cs-tag{font-size:11px;color:var(--text3);border:1px solid var(--border2);border-radius:4px;padding:4px 12px}
+.cs-tag.p{color:var(--purple);border-color:rgba(168,85,247,.3);background:rgba(124,58,237,.08)}
+.cs-links{display:flex;gap:12px;flex-wrap:wrap}
+.cs-divider{border:none;border-top:1px solid var(--border);margin:32px 0}
+
+/* PAGE HERO */
+.page-hero{min-height:55vh;display:flex;align-items:flex-end;padding:120px 48px 80px;position:relative;overflow:hidden;background:var(--bg)}
+.page-hero-ambient{position:absolute;top:10%;right:10%;width:600px;height:500px;background:radial-gradient(ellipse,rgba(124,58,237,.12),transparent 70%);pointer-events:none;animation:glow 6s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.6}50%{opacity:1}}
+.page-hero-content{max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:2}
+.page-hero-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.page-hero-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.page-hero-title{font-family:var(--font-h);font-size:clamp(48px,7vw,84px);font-weight:800;line-height:.92;letter-spacing:-.04em;color:var(--text);margin-bottom:24px}
+.page-hero-title em{font-style:normal;color:var(--text3);-webkit-text-stroke:1px var(--text4)}
+.page-hero-sub{font-size:17px;color:var(--text2);max-width:500px;line-height:1.7;font-weight:300}
+
+/* PROJECT GRID */
+#projects-grid{background:var(--bg2)}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-top:72px}
+.proj-card{background:var(--bg);padding:52px 44px;transition:background .3s;position:relative;overflow:hidden;cursor:pointer}
+.proj-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);opacity:0;transition:opacity .5s}
+.proj-card:hover{background:var(--bg3)}
+.proj-card:hover::after{opacity:.6}
+.proj-card.featured{grid-column:1/-1}
+.proj-card.coming{opacity:.45;cursor:default}
+.proj-card.coming:hover{background:var(--bg)}
+.proj-card.coming::after{display:none}
+.proj-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:16px}
+.proj-name{font-family:var(--font-h);font-size:clamp(32px,4vw,54px);font-weight:800;color:var(--text);letter-spacing:-.03em;margin-bottom:14px;line-height:.95}
+.proj-desc{font-size:14px;color:var(--text2);line-height:1.8;max-width:500px;font-weight:300;margin-bottom:28px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.proj-tag{font-size:11px;color:var(--text3);border:1px solid var(--border2);border-radius:4px;padding:3px 10px}
+.proj-tag.p{color:var(--purple);border-color:rgba(168,85,247,.25);background:rgba(124,58,237,.08)}
+.proj-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.proj-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;border-radius:100px;padding:6px 16px;letter-spacing:.05em;font-weight:500;transition:all .3s var(--ease);text-decoration:none;cursor:none}
+.proj-badge.live{color:var(--purple);border:1px solid rgba(168,85,247,.3);background:rgba(124,58,237,.08)}
+.proj-badge.live:hover{background:rgba(124,58,237,.18);border-color:var(--purple);transform:translateY(-1px)}
+.proj-badge.live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--purple);animation:dotPulse 2s infinite}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,.6)}70%{box-shadow:0 0 0 5px transparent}}
+.proj-badge.soon{color:var(--text3);border:1px solid var(--border2)}
+.proj-badge.soon::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--text3)}
+.cs-open-btn{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--text2);border:1px solid var(--border2);border-radius:100px;padding:6px 16px;transition:all .3s var(--ease);font-family:var(--font-b);background:transparent;cursor:pointer}
+.cs-open-btn:hover{border-color:rgba(168,85,247,.3);color:var(--purple)}
+
+/* COMING SOON SECTION */
+#coming{background:var(--bg);padding:80px 48px}
+.coming-inner{max-width:1100px;margin:0 auto}
+.coming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.coming-card{border:1px solid var(--border);border-radius:14px;padding:32px 28px;opacity:.5;transition:all .3s var(--ease)}
+.coming-card:hover{opacity:.7;border-color:var(--border2)}
+.coming-icon{font-size:24px;margin-bottom:16px}
+.coming-name{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.coming-desc{font-size:13px;color:var(--text2);line-height:1.7;font-weight:300}
+.coming-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--text3);border:1px solid var(--border);border-radius:100px;padding:4px 12px;margin-top:16px;letter-spacing:.05em}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:52px 48px;position:relative;z-index:2}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px}
+.footer-brand{display:flex;flex-direction:column;gap:14px}
+.footer-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.footer-logo-text span{color:var(--purple)}
+.footer-tagline{font-size:13px;color:var(--text3);line-height:1.7;max-width:200px}
+.footer-socials{display:flex;gap:10px;align-items:center}
+.social-link{width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s var(--ease);position:relative;overflow:hidden}
+.social-link::before{content:'';position:absolute;inset:0;background:rgba(124,58,237,.12);opacity:0;transition:opacity .3s}
+.social-link:hover{border-color:rgba(168,85,247,.4);transform:translateY(-3px);box-shadow:0 8px 24px rgba(124,58,237,.25)}
+.social-link:hover::before{opacity:1}
+.social-link svg{width:16px;height:16px;fill:var(--text3);transition:fill .2s;position:relative;z-index:1}
+.social-link:hover svg{fill:var(--purple)}
+.footer-copy{font-size:11px;color:var(--text4);letter-spacing:.03em}
+.footer-col h4{font-family:var(--font-h);font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{font-size:13px;color:var(--text3);text-decoration:none;transition:color .2s;cursor:none}
+.footer-col ul a:hover{color:var(--text2)}
+
+@media(max-width:900px){
+  nav{padding:0 20px}.nav-links{display:none}
+  section{padding:80px 20px}.page-hero{padding:100px 20px 60px}
+  #coming{padding:60px 20px}
+  .proj-grid,.coming-grid{grid-template-columns:1fr}
+  .proj-card.featured{grid-column:auto}
+  .cs-grid{grid-template-columns:1fr}
+  .modal-box{padding:32px 20px}
+  .footer-inner{grid-template-columns:1fr;gap:32px}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- CASE STUDY MODALS -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeCSModal(event)">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close-btn" onclick="closeAllCS()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-text">RGS<span>.</span>Labs™</div></a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+    <li><a href="about.html" data-en="About" data-es="Nosotros">About</a></li>
+    <li><a href="services.html" data-en="Services" data-es="Servicios">Services</a></li>
+    <li><a href="projects.html" class="active" data-en="Projects" data-es="Proyectos">Projects</a></li>
+    <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle"><button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button><button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button></div>
+    <a href="contact.html" class="nav-cta" data-en="Start a Project" data-es="Iniciar Proyecto">Start a Project</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-ambient"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-label" data-en="Our Work" data-es="Nuestro Trabajo">Our Work</div>
+    <h1 class="page-hero-title" data-en="Projects that<br><em>speak for</em><br>themselves." data-es="Proyectos que<br><em>hablan por</em><br>sí mismos.">Projects that<br><em>speak for</em><br>themselves.</h1>
+    <p class="page-hero-sub" data-en="Each project is a case study in technology, design and strategic thinking — not just a deliverable." data-es="Cada proyecto es un caso de estudio en tecnología, diseño y pensamiento estratégico — no solo una entrega.">Each project is a case study in technology, design and strategic thinking — not just a deliverable.</p>
+  </div>
+</div>
+
+<section id="projects-grid">
+  <div class="container">
+    <div class="sec-label reveal" data-en="Featured Projects" data-es="Proyectos Destacados">Featured Projects</div>
+    <h2 class="sec-title reveal" data-en="What we've built." data-es="Lo que hemos construido.">What we've built.</h2>
+    <div class="proj-grid">
+
+      <!-- RABAI -->
+      <div class="proj-card featured reveal" onclick="openCS('rabai')">
+        <div class="proj-label" data-en="AI Product · Flagship" data-es="Producto IA · Insignia">AI Product · Flagship</div>
+        <div class="proj-name">RabAI</div>
+        <div class="proj-desc" data-en="Our flagship AI tool — built as a public demonstration of RGS Labs' technological capability. An intelligent assistant designed for indie developers and creators." data-es="Nuestra herramienta de IA insignia — construida como demostración pública de la capacidad tecnológica de RGS Labs. Un asistente inteligente diseñado para indie developers y creadores.">Our flagship AI tool — built as a public demonstration of RGS Labs' technological capability. An intelligent assistant designed for indie developers and creators.</div>
+        <div class="proj-tags"><span class="proj-tag p">AI</span><span class="proj-tag p">SaaS</span><span class="proj-tag">Indie Dev</span><span class="proj-tag">NLP</span></div>
+        <div class="proj-actions">
+          <a href="https://rab-ai-repository.vercel.app/" target="_blank" rel="noopener" class="proj-badge live" onclick="event.stopPropagation()" data-en="Live · Try RabAI →" data-es="En vivo · Probar RabAI →">Live · Try RabAI →</a>
+          <button class="cs-open-btn" onclick="event.stopPropagation();openCS('rabai')" data-en="📖 Case Study" data-es="📖 Caso de Estudio">📖 Case Study</button>
+        </div>
+      </div>
+
+      <!-- BACKSTAGE -->
+      <div class="proj-card reveal" onclick="openCS('backstage')">
+        <div class="proj-label" data-en="Website + Landing Page · Portfolio" data-es="Sitio Web + Landing Page · Portfolio">Website + Landing Page · Portfolio</div>
+        <div class="proj-name">Backstage</div>
+        <div class="proj-desc" data-en="Cinematic portfolio site with AI chatbot integration and premium branding experience. Built for a photography brand needing a professional digital presence." data-es="Sitio de portfolio cinematográfico con integración de chatbot IA y experiencia de branding premium. Construido para una marca de fotografía que necesitaba presencia digital profesional.">Cinematic portfolio site with AI chatbot integration and premium branding experience. Built for a photography brand needing a professional digital presence.</div>
+        <div class="proj-tags"><span class="proj-tag p">Website</span><span class="proj-tag p">Landing Page</span><span class="proj-tag">AI Chatbot</span><span class="proj-tag">Photography</span></div>
+        <div class="proj-actions">
+          <a href="https://bit.ly/BackstageFoto" target="_blank" rel="noopener" class="proj-badge live" onclick="event.stopPropagation()" data-en="Website →" data-es="Sitio Web →">Website →</a>
+          <a href="https://bit.ly/XV-Backstage" target="_blank" rel="noopener" class="proj-badge live" onclick="event.stopPropagation()" data-en="Landing Page →" data-es="Landing Page →">Landing Page →</a>
+          <button class="cs-open-btn" onclick="event.stopPropagation();openCS('backstage')" data-en="📖 Case Study" data-es="📖 Caso de Estudio">📖 Case Study</button>
+        </div>
+      </div>
+
+      <!-- LUNA -->
+      <div class="proj-card coming">
+        <div class="proj-label">AI Product · Coming Soon</div>
+        <div class="proj-name">LUNA</div>
+        <div class="proj-desc" data-en="The next AI product from RGS Labs™. An intelligent, context-aware assistant designed for the next generation of digital businesses." data-es="El siguiente producto de IA de RGS Labs™. Un asistente inteligente y contextual diseñado para la próxima generación de negocios digitales.">The next AI product from RGS Labs™. An intelligent, context-aware assistant designed for the next generation of digital businesses.</div>
+        <div class="proj-actions"><span class="proj-badge soon" data-en="In Development" data-es="En Desarrollo">In Development</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON -->
+<section id="coming">
+  <div class="coming-inner">
+    <div class="sec-label reveal" data-en="On the Horizon" data-es="En el Horizonte">On the Horizon</div>
+    <h2 class="sec-title reveal" data-en="What's being built." data-es="Lo que se está construiendo.">What's being built.</h2>
+    <div class="coming-grid">
+      <div class="coming-card reveal stagger-1"><div class="coming-icon">🤖</div><div class="coming-name">LUNA</div><div class="coming-desc" data-en="AI assistant platform for digital businesses. Context-aware, intelligent and designed to scale." data-es="Plataforma de asistente IA para negocios digitales. Contextual, inteligente y diseñado para escalar.">AI assistant platform for digital businesses.</div><div class="coming-badge" data-en="In Development" data-es="En Desarrollo">In Development</div></div>
+      <div class="coming-card reveal stagger-2"><div class="coming-icon">🎮</div><div class="coming-name">Talk to the Hand</div><div class="coming-desc" data-en="An experimental creative project exploring the intersection of games, AI and digital art." data-es="Un proyecto creativo experimental que explora la intersección de juegos, IA y arte digital.">Experimental creative project at the intersection of games and AI.</div><div class="coming-badge" data-en="In Development" data-es="En Desarrollo">In Development</div></div>
+      <div class="coming-card reveal stagger-3"><div class="coming-icon">⚡</div><div class="coming-name" data-en="New Client Projects" data-es="Nuevos Proyectos de Clientes">New Client Projects</div><div class="coming-desc" data-en="New websites, landing pages and digital experiences being built for our clients — coming soon to this portfolio." data-es="Nuevos sitios web, landing pages y experiencias digitales siendo construidos para nuestros clientes — próximamente en este portfolio.">New client work being built now.</div><div class="coming-badge" data-en="Available Now" data-es="Disponible Ahora">Available Now</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo-text">RGS<span>.</span>Labs™</div>
+      <div class="footer-tagline">Modern technology ecosystem.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a href="https://gamejolt.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.5 17.5h-8v-7h8v7zm0-9h-8v-2h8v2zm5 9h-3v-4h-2v4h-1v-6h6v6zm0-8h-6v-3h6v3z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 RGS Labs™. All rights reserved.</div>
+    </div>
+    <div class="footer-col"><h4 data-en="Company" data-es="Empresa">Company</h4><ul><li><a href="about.html" data-en="About" data-es="Nosotros">About</a></li><li><a href="projects.html" data-en="Projects" data-es="Proyectos">Projects</a></li><li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li></ul></div>
+    <div class="footer-col"><h4 data-en="Services" data-es="Servicios">Services</h4><ul><li><a href="services.html">Landing Page</a></li><li><a href="services.html" data-en="Website" data-es="Sitio Web">Website</a></li><li><a href="services.html" data-en="AI Assistant" data-es="Asistente IA">AI Assistant</a></li><li><a href="services.html" data-en="Brand Identity" data-es="Identidad de Marca">Brand Identity</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a href="contact.html" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</a></li><li><a href="contact.html" data-en="Terms of Service" data-es="Términos">Terms of Service</a></li></ul></div>
+  </div>
+</footer>
+
+<script>
+const dot=document.getElementById('cursorDot');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'});
+document.addEventListener('mousedown',()=>dot.classList.add('clicking'));
+document.addEventListener('mouseup',()=>dot.classList.remove('clicking'));
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>dot.classList.add('hover'));el.addEventListener('mouseleave',()=>dot.classList.remove('hover'))});
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
+const revObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+let lang='en';
+function setLang(l){lang=l;document.getElementById('btnEN').classList.toggle('active',l==='en');document.getElementById('btnES').classList.toggle('active',l==='es');document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+l);if(v)el.innerHTML=v})}
+
+// CASE STUDIES DATA
+const cs={
+  rabai:{
+    en:{label:'AI Product · Flagship',title:'RabAI',tagline:'An AI tool built for the indie dev community — and as proof of what RGS Labs can do.',tags:['AI','SaaS','Indie Dev','NLP','Vercel'],problem:{title:'The Problem',text:'The indie game development community lacked accessible, intelligent AI tools tailored to their specific needs — most AI solutions were either too generic, too expensive, or built for enterprise teams.'},solution:{title:'The Solution',text:'RabAI was designed as a focused AI assistant for indie developers and creators. Built with a clean, approachable UI and integrated directly into a Vercel-powered infrastructure, it serves as both a useful tool and a live demonstration of RGS Labs\' AI development capabilities.'},result:{title:'The Result',text:'A live, publicly accessible AI product that demonstrates RGS Labs\' technical capacity — serving the indie dev community while establishing technological credibility for the studio.'},links:[{label:'Try RabAI →',url:'https://rab-ai-repository.vercel.app/',primary:true}]},
+    es:{label:'Producto IA · Insignia',title:'RabAI',tagline:'Una herramienta de IA construida para la comunidad indie dev — y como prueba de lo que RGS Labs puede hacer.',tags:['IA','SaaS','Indie Dev','NLP','Vercel'],problem:{title:'El Problema',text:'La comunidad de desarrollo indie carecía de herramientas de IA accesibles y adaptadas a sus necesidades específicas — la mayoría eran demasiado genéricas, costosas o diseñadas para equipos empresariales.'},solution:{title:'La Solución',text:'RabAI fue diseñado como un asistente de IA enfocado en indie developers y creadores. Con una UI limpia e integrado en infraestructura Vercel, sirve como herramienta útil y demostración en vivo de las capacidades de desarrollo IA de RGS Labs.'},result:{title:'El Resultado',text:'Un producto de IA accesible públicamente que demuestra la capacidad técnica de RGS Labs — sirviendo a la comunidad indie mientras establece credibilidad tecnológica para el estudio.'},links:[{label:'Probar RabAI →',url:'https://rab-ai-repository.vercel.app/',primary:true}]}
+  },
+  backstage:{
+    en:{label:'Website + Landing Page · Portfolio',title:'Backstage',tagline:'A photography brand needed more than a portfolio — they needed a professional digital presence that converts.',tags:['Website','Landing Page','Photography','AI Chatbot','Premium Branding'],problem:{title:'The Problem',text:'The Backstage photography brand needed a professional digital presence to attract serious clients. Their existing online footprint did not reflect the quality of their work — resulting in missed opportunities and lack of credibility.'},solution:{title:'The Solution',text:'RGS Labs designed and built two complementary digital assets: a full cinematic portfolio website with AI chatbot integration and WhatsApp automation, plus a dedicated landing page optimized for conversion. Both feature premium branding, smooth animations and a coherent visual identity.'},result:{title:'The Result',text:'A complete professional digital ecosystem — a premium website that positions Backstage as a serious photography brand, plus a high-converting landing page ready to capture prospective clients.'},links:[{label:'View Website →',url:'https://bit.ly/BackstageFoto',primary:true},{label:'View Landing Page →',url:'https://bit.ly/XV-Backstage',primary:false}]},
+    es:{label:'Sitio Web + Landing Page · Portfolio',title:'Backstage',tagline:'Una marca de fotografía necesitaba más que un portfolio — necesitaba una presencia digital profesional que convierte.',tags:['Sitio Web','Landing Page','Fotografía','Chatbot IA','Branding Premium'],problem:{title:'El Problema',text:'La marca de fotografía Backstage necesitaba una presencia digital profesional para atraer clientes serios. Su presencia online existente no reflejaba la calidad de su trabajo, generando oportunidades perdidas y falta de credibilidad.'},solution:{title:'La Solución',text:'RGS Labs diseñó y construyó dos activos digitales complementarios: un sitio de portfolio cinematográfico completo con integración de chatbot IA y automatización de WhatsApp, más una landing page dedicada optimizada para conversión.'},result:{title:'El Resultado',text:'Un ecosistema digital profesional completo — un sitio premium que posiciona a Backstage como una marca de fotografía seria, más una landing page de alta conversión lista para captar prospectos.'},links:[{label:'Ver Sitio Web →',url:'https://bit.ly/BackstageFoto',primary:true},{label:'Ver Landing Page →',url:'https://bit.ly/XV-Backstage',primary:false}]}
+  }
+};
+
+function openCS(key){
+  const d=cs[key][lang]||cs[key]['en'];
+  const links=d.links.map(l=>`<a href="${l.url}" target="_blank" rel="noopener" class="${l.primary?'btn-primary':'btn-ghost'}" onclick="event.stopPropagation()">${l.label}</a>`).join('');
+  const tags=d.tags.map(t=>`<span class="cs-tag p">${t}</span>`).join('');
+  document.getElementById('modalContent').innerHTML=`
+    <div class="cs-label">${d.label}</div>
+    <h2 class="cs-title">${d.title}</h2>
+    <p class="cs-tagline">${d.tagline}</p>
+    <div class="cs-tags">${tags}</div>
+    <div class="cs-grid">
+      <div class="cs-block"><div class="cs-block-label">${d.problem.title}</div><div class="cs-block-text">${d.problem.text}</div></div>
+      <div class="cs-block"><div class="cs-block-label">${d.solution.title}</div><div class="cs-block-text">${d.solution.text}</div></div>
+      <div class="cs-block"><div class="cs-block-label">${d.result.title}</div><div class="cs-block-text">${d.result.text}</div></div>
+    </div>
+    <div class="cs-links">${links}</div>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeAllCS(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow=''}
+function closeCSModal(e){if(e.target===document.getElementById('modalOverlay'))closeAllCS()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllCS()});
+</script>
+</body>
+</html>

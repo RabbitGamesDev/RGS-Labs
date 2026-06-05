@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Contact — RGS Labs™</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050505;--bg2:#0a0a0a;--bg3:#101010;--bg4:#161616;--border:#1a1a1a;--border2:#242424;--border3:#303030;--text:#efefef;--text2:#787878;--text3:#3d3d3d;--text4:#252525;--purple:#a855f7;--purple2:#7c3aed;--purple3:rgba(124,58,237,.12);--purple4:rgba(168,85,247,.06);--font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:1;mix-blend-mode:overlay}
+.cursor-dot{position:fixed;width:6px;height:6px;background:var(--purple);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s var(--ease),height .2s var(--ease),background .2s;will-change:left,top}
+.cursor-dot.hover{width:10px;height:10px;background:#c084fc}
+.cursor-dot.clicking{width:4px;height:4px;opacity:.7}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
+nav.scrolled{background:rgba(5,5,5,.92);backdrop-filter:blur(28px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;cursor:none}
+.nav-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.nav-logo-text span{color:var(--purple)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;color:var(--text2);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s;cursor:none;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--purple);transition:width .3s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-toggle{display:flex;align-items:center;border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg2)}
+.lang-btn{font-size:11px;padding:5px 12px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-family:var(--font-b);font-weight:500;letter-spacing:.04em;transition:all .25s}
+.lang-btn.active{background:var(--purple2);color:#fff}
+.nav-cta{background:var(--purple2);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .25s;cursor:none;border:1px solid transparent;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);opacity:0;transition:opacity .2s}
+.nav-cta:hover::before{opacity:1}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(124,58,237,.4)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.stagger-1{transition-delay:.05s}.stagger-2{transition-delay:.12s}.stagger-3{transition-delay:.2s}.stagger-4{transition-delay:.28s}
+
+/* ── PAGE HERO ── */
+.page-hero{min-height:52vh;display:flex;align-items:flex-end;padding:120px 48px 72px;position:relative;overflow:hidden;background:var(--bg2)}
+.page-hero-ambient{position:absolute;top:0;right:0;width:700px;height:500px;background:radial-gradient(ellipse,rgba(124,58,237,.13),transparent 70%);pointer-events:none;animation:ambientPulse 6s ease-in-out infinite}
+@keyframes ambientPulse{0%,100%{opacity:.5}50%{opacity:1}}
+.page-hero-content{max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:2}
+.page-hero-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.page-hero-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.page-hero-title{font-family:var(--font-h);font-size:clamp(48px,7vw,84px);font-weight:800;line-height:.92;letter-spacing:-.04em;color:var(--text);margin-bottom:20px}
+.page-hero-title em{font-style:normal;color:var(--text3);-webkit-text-stroke:1px var(--text4)}
+.page-hero-sub{font-size:17px;color:var(--text2);max-width:480px;line-height:1.7;font-weight:300}
+
+/* ── BRIEF BANNER ── */
+.brief-banner{background:var(--bg);border-bottom:1px solid var(--border);padding:24px 48px}
+.brief-banner-inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-start;gap:16px}
+.brief-banner-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.brief-banner-text{font-size:13px;color:var(--text2);line-height:1.7;font-weight:300}
+.brief-banner-text strong{color:var(--text);font-weight:500}
+
+/* ── CONTACT LAYOUT ── */
+#contact-main{background:var(--bg);padding:100px 48px}
+.contact-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+
+/* ── LEFT INFO ── */
+.contact-left{}
+.sec-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.sec-title{font-family:var(--font-h);font-size:clamp(28px,3.5vw,44px);font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--text);margin-bottom:16px}
+.contact-tagline{font-size:15px;color:var(--text2);line-height:1.8;font-weight:300;margin-bottom:36px;max-width:380px}
+.contact-meta{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.contact-meta-item{display:flex;align-items:center;gap:14px}
+.meta-icon{width:40px;height:40px;border-radius:11px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:all .3s var(--ease)}
+.contact-meta-item:hover .meta-icon{border-color:rgba(168,85,247,.35);background:var(--purple3)}
+.meta-label{font-size:10px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.meta-val{font-size:14px;color:var(--text2);font-weight:300}
+.email-direct{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--text2);text-decoration:none;border:1px solid var(--border2);border-radius:9px;padding:12px 18px;transition:all .3s var(--ease);font-family:var(--font-b);background:var(--bg2);margin-bottom:28px;cursor:none}
+.email-direct:hover{border-color:rgba(168,85,247,.35);color:var(--purple);background:var(--purple3);transform:translateY(-2px)}
+.legal-links{display:flex;flex-wrap:wrap;gap:8px}
+.legal-link-btn{font-size:11px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:var(--font-b);transition:all .2s;letter-spacing:.02em}
+.legal-link-btn:hover{color:var(--purple);border-color:rgba(168,85,247,.3)}
+
+/* ── FORM CARD ── */
+.form-card{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:44px;position:relative;overflow:hidden}
+.form-card::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(168,85,247,.1),transparent 70%);pointer-events:none}
+.form-card-title{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;letter-spacing:-.015em}
+.form-card-sub{font-size:13px;color:var(--text3);margin-bottom:32px;font-weight:300}
+.form-fields{display:flex;flex-direction:column;gap:16px}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:7px}
+.form-label{font-size:11px;color:var(--text2);font-weight:500;letter-spacing:.05em;text-transform:uppercase}
+.form-label .req{color:var(--purple);margin-left:2px}
+.form-input,.form-select,.form-textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:13px 16px;font-size:14px;color:var(--text);font-family:var(--font-b);font-weight:300;outline:none;transition:all .25s;width:100%;-webkit-appearance:none;appearance:none}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text3)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(168,85,247,.5);background:rgba(255,255,255,.02);box-shadow:0 0 0 3px rgba(168,85,247,.08)}
+.form-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.form-select option{background:var(--bg3);color:var(--text)}
+.form-textarea{resize:vertical;min-height:90px;max-height:180px}
+
+/* multi-select checkboxes */
+.form-checks{display:flex;flex-wrap:wrap;gap:8px}
+.form-check{display:flex;align-items:center;gap:8px;cursor:pointer}
+.form-check input{appearance:none;-webkit-appearance:none;width:16px;height:16px;border:1px solid var(--border2);border-radius:4px;background:var(--bg3);cursor:pointer;transition:all .2s;flex-shrink:0}
+.form-check input:checked{background:var(--purple2);border-color:var(--purple2)}
+.form-check input:checked::after{content:'✓';display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;width:100%;height:100%}
+.form-check-label{font-size:12px;color:var(--text2);cursor:pointer;transition:color .2s}
+.form-check:hover .form-check-label{color:var(--text)}
+
+/* PDF checkbox */
+.pdf-check{display:flex;align-items:flex-start;gap:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:14px 16px;cursor:pointer;transition:border-color .2s}
+.pdf-check:hover{border-color:rgba(168,85,247,.3)}
+.pdf-check input{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:1px solid var(--border2);border-radius:5px;background:var(--bg4);cursor:pointer;transition:all .2s;flex-shrink:0;margin-top:1px}
+.pdf-check input:checked{background:var(--purple2);border-color:var(--purple2)}
+.pdf-check-text{font-size:13px;color:var(--text2);line-height:1.6;font-weight:300}
+.pdf-check-text strong{color:var(--text);font-weight:500}
+
+.form-submit{background:var(--purple2);color:#fff;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:500;font-family:var(--font-b);border:none;cursor:pointer;width:100%;transition:all .3s var(--ease);position:relative;overflow:hidden;margin-top:8px;letter-spacing:.01em}
+.form-submit::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);opacity:0;transition:opacity .2s}
+.form-submit:hover::before{opacity:1}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,58,237,.5)}
+.form-submit:active{transform:translateY(0)}
+.form-note{font-size:11px;color:var(--text3);text-align:center;margin-top:10px;line-height:1.6}
+
+/* ── POLICY MODAL ── */
+.policy-modal{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:600;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(16px)}
+.policy-modal.active{opacity:1;pointer-events:all}
+.policy-box{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:560px;padding:48px;transform:translateY(20px);transition:transform .4s var(--ease);position:relative}
+.policy-modal.active .policy-box{transform:translateY(0)}
+.policy-icon{font-size:32px;margin-bottom:20px;display:block}
+.policy-title{font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--text);margin-bottom:12px;letter-spacing:-.02em}
+.policy-text{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px;font-weight:300}
+.policy-links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.policy-link{font-size:12px;color:var(--purple);text-decoration:none;border:1px solid rgba(168,85,247,.25);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all .2s;font-family:var(--font-b);background:var(--purple3)}
+.policy-link:hover{background:rgba(124,58,237,.2);border-color:var(--purple)}
+.policy-confirm{display:flex;align-items:flex-start;gap:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:16px;cursor:pointer;margin-bottom:24px;transition:border-color .2s}
+.policy-confirm:hover{border-color:rgba(168,85,247,.3)}
+.policy-confirm input{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:1px solid var(--border2);border-radius:5px;background:var(--bg4);cursor:pointer;transition:all .2s;flex-shrink:0;margin-top:1px}
+.policy-confirm input:checked{background:var(--purple2);border-color:var(--purple2)}
+.policy-confirm-text{font-size:13px;color:var(--text2);line-height:1.6;font-weight:300}
+.policy-confirm-text strong{color:var(--text);font-weight:500}
+.policy-actions{display:flex;gap:12px}
+.policy-accept{background:var(--purple2);color:#fff;padding:14px 28px;border-radius:10px;font-size:14px;font-weight:500;font-family:var(--font-b);border:none;cursor:pointer;flex:1;transition:all .3s var(--ease)}
+.policy-accept:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(124,58,237,.5)}
+.policy-accept:disabled{opacity:.4;transform:none;box-shadow:none;cursor:not-allowed}
+.policy-cancel{background:transparent;color:var(--text3);padding:14px 20px;border-radius:10px;font-size:14px;font-family:var(--font-b);border:1px solid var(--border2);cursor:pointer;transition:all .2s}
+.policy-cancel:hover{color:var(--text2);border-color:var(--border3)}
+
+/* ── LEGAL MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(12px)}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:700px;max-height:82vh;overflow-y:auto;padding:52px;transform:translateY(20px);transition:transform .4s var(--ease);scrollbar-width:thin;scrollbar-color:var(--border3) transparent}
+.modal-overlay.active .modal-box{transform:translateY(0)}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px}
+.modal-title{font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--text)}
+.modal-close{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;margin-left:20px}
+.modal-close:hover{border-color:var(--purple);color:var(--purple)}
+.modal-section{margin-bottom:28px}
+.modal-section h3{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.modal-section p,.modal-section li{font-size:14px;color:var(--text2);line-height:1.85;font-weight:300}
+.modal-section ul{padding-left:16px}
+.modal-section li{margin-bottom:7px}
+.modal-divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:52px 48px;position:relative;z-index:2}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px}
+.footer-brand{display:flex;flex-direction:column;gap:14px}
+.footer-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.footer-logo-text span{color:var(--purple)}
+.footer-tagline{font-size:13px;color:var(--text3);line-height:1.7;max-width:200px}
+.footer-socials{display:flex;gap:10px}
+.social-link{width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s var(--ease);position:relative;overflow:hidden}
+.social-link::before{content:'';position:absolute;inset:0;background:var(--purple3);opacity:0;transition:opacity .3s}
+.social-link:hover{border-color:rgba(168,85,247,.4);transform:translateY(-3px);box-shadow:0 8px 24px rgba(124,58,237,.25)}
+.social-link:hover::before{opacity:1}
+.social-link svg{width:16px;height:16px;fill:var(--text3);transition:fill .2s;position:relative;z-index:1}
+.social-link:hover svg{fill:var(--purple)}
+.footer-copy{font-size:11px;color:var(--text4);letter-spacing:.03em}
+.footer-col h4{font-family:var(--font-h);font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{font-size:13px;color:var(--text3);text-decoration:none;transition:color .2s;cursor:none}
+.footer-col ul a:hover{color:var(--text2)}
+
+@media(max-width:900px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .page-hero{padding:100px 20px 60px}
+  .brief-banner{padding:16px 20px}
+  #contact-main{padding:72px 20px}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  .form-row-2{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:32px}
+  .form-card{padding:28px 22px}
+  .policy-box{padding:32px 22px}
+  .modal-box{padding:32px 22px}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- POLICY CONFIRMATION MODAL -->
+<div class="policy-modal" id="policyModal">
+  <div class="policy-box">
+    <span class="policy-icon">📋</span>
+    <div class="policy-title" data-en="Before we continue" data-es="Antes de continuar">Before we continue</div>
+    <p class="policy-text" data-en="Please review our policies before submitting your project brief. By sending your request you confirm that you have read and agree to the following:" data-es="Por favor revisa nuestras políticas antes de enviar tu brief. Al enviar tu solicitud confirmas que leíste y aceptas lo siguiente:">Please review our policies before submitting your project brief. By sending your request you confirm that you have read and agree to the following:</p>
+    <div class="policy-links">
+      <span class="policy-link" onclick="openLegal('privacy')" data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</span>
+      <span class="policy-link" onclick="openLegal('terms')" data-en="Terms of Service" data-es="Términos de Servicio">Terms of Service</span>
+      <span class="policy-link" onclick="openLegal('payments')" data-en="Payment Policy" data-es="Política de Pagos">Payment Policy</span>
+      <span class="policy-link" onclick="openLegal('revisions')" data-en="Revision Policy" data-es="Política de Revisiones">Revision Policy</span>
+    </div>
+    <label class="policy-confirm" id="policyConfirmLabel">
+      <input type="checkbox" id="policyCheck" onchange="toggleAccept()"/>
+      <span class="policy-confirm-text" data-en="<strong>I confirm</strong> that I have read the Privacy Policy, Terms of Service, Payment Policy and Revision Policy of RGS Labs™ and I agree to all terms." data-es="<strong>Confirmo</strong> que he leído la Política de Privacidad, Términos de Servicio, Política de Pagos y Política de Revisiones de RGS Labs™ y acepto todos los términos."><strong>I confirm</strong> that I have read the Privacy Policy, Terms of Service, Payment Policy and Revision Policy of RGS Labs™ and I agree to all terms.</span>
+    </label>
+    <div class="policy-actions">
+      <button class="policy-accept" id="policyAcceptBtn" onclick="confirmAndSend()" disabled data-en="Confirm & Send Brief →" data-es="Confirmar y Enviar Brief →">Confirm & Send Brief →</button>
+      <button class="policy-cancel" onclick="closePolicyModal()" data-en="Go Back" data-es="Regresar">Go Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEGAL MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeLegalModal(event)">
+  <div class="modal-box"><div class="modal-header"><div class="modal-title" id="modalTitle"></div><button class="modal-close" onclick="closeAllLegal()">✕</button></div><div id="modalContent"></div></div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-text">RGS<span>.</span>Labs™</div></a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+    <li><a href="about.html" data-en="About" data-es="Nosotros">About</a></li>
+    <li><a href="services.html" data-en="Services" data-es="Servicios">Services</a></li>
+    <li><a href="projects.html" data-en="Projects" data-es="Proyectos">Projects</a></li>
+    <li><a href="contact.html" class="active" data-en="Contact" data-es="Contacto">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle"><button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button><button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button></div>
+    <a href="contact.html" class="nav-cta" data-en="Start a Project" data-es="Iniciar Proyecto">Start a Project</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-ambient"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-label" data-en="Get in Touch" data-es="Contáctanos">Get in Touch</div>
+    <h1 class="page-hero-title" data-en="Let's build<br><em>something</em><br>real." data-es="Construyamos<br><em>algo</em><br>real.">Let's build<br><em>something</em><br>real.</h1>
+    <p class="page-hero-sub" data-en="Fill out the project form and we'll get back to you within 24–48 hours with a full quote and strategy." data-es="Llena el formulario de proyecto y te contactaremos en 24–48 horas con una cotización y estrategia completa.">Fill out the project form and we'll get back to you within 24–48 hours with a full quote and strategy.</p>
+  </div>
+</div>
+
+<!-- BRIEF BANNER -->
+<div class="brief-banner">
+  <div class="brief-banner-inner">
+    <div class="brief-banner-icon">📋</div>
+    <div class="brief-banner-text">
+      <strong data-en="PDF Brief Required — " data-es="Brief en PDF Requerido — ">PDF Brief Required — </strong>
+      <span data-en="To ensure the highest quality results, all clients must provide a complete PDF brief containing project goals, references, content, assets and requirements before development begins. Have it ready to attach to your email." data-es="Para garantizar los mejores resultados, todos los clientes deben proporcionar un brief en PDF completo con objetivos, referencias, contenido, assets y requisitos antes de iniciar. Tenlo listo para adjuntarlo al correo.">To ensure the highest quality results, all clients must provide a complete PDF brief containing project goals, references, content, assets and requirements before development begins. Have it ready to attach to your email.</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MAIN -->
+<section id="contact-main">
+  <div class="contact-grid">
+
+    <!-- LEFT -->
+    <div class="contact-left">
+      <div class="sec-label reveal" data-en="Contact Info" data-es="Información de Contacto">Contact Info</div>
+      <h2 class="sec-title reveal" data-en="Ready when<br>you are." data-es="Listos cuando<br>tú lo estés.">Ready when<br>you are.</h2>
+      <p class="contact-tagline reveal" data-en="Send us your project brief and we'll analyze it, define the best approach and deliver something that actually works for your brand." data-es="Envíanos tu brief de proyecto y lo analizaremos, definiremos el mejor enfoque y entregaremos algo que realmente funcione para tu marca.">Send us your project brief and we'll analyze it, define the best approach and deliver something that actually works for your brand.</p>
+      <div class="contact-meta reveal">
+        <div class="contact-meta-item">
+          <div class="meta-icon">⏱</div>
+          <div><div class="meta-label" data-en="Response Time" data-es="Tiempo de Respuesta">Response Time</div><div class="meta-val" data-en="24–48 hours" data-es="24–48 horas">24–48 hours</div></div>
+        </div>
+        <div class="contact-meta-item">
+          <div class="meta-icon">💰</div>
+          <div><div class="meta-label" data-en="To Begin" data-es="Para Iniciar">To Begin</div><div class="meta-val" data-en="50% deposit required" data-es="50% de anticipo requerido">50% deposit required</div></div>
+        </div>
+        <div class="contact-meta-item">
+          <div class="meta-icon">✏️</div>
+          <div><div class="meta-label" data-en="Revisions" data-es="Revisiones">Revisions</div><div class="meta-val" data-en="2 rounds included per project" data-es="2 rondas incluidas por proyecto">2 rounds included per project</div></div>
+        </div>
+        <div class="contact-meta-item">
+          <div class="meta-icon">📋</div>
+          <div><div class="meta-label" data-en="PDF Brief" data-es="Brief en PDF">PDF Brief</div><div class="meta-val" data-en="Required before development" data-es="Requerido antes del desarrollo">Required before development</div></div>
+        </div>
+      </div>
+      <a href="mailto:rgslabs.contact@gmail.com" class="email-direct reveal">✉ rgslabs.contact@gmail.com</a>
+      <div class="legal-links reveal">
+        <button class="legal-link-btn" onclick="openLegal('privacy')" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</button>
+        <button class="legal-link-btn" onclick="openLegal('terms')" data-en="Terms of Service" data-es="Términos">Terms of Service</button>
+        <button class="legal-link-btn" onclick="openLegal('payments')" data-en="Payments" data-es="Pagos">Payments</button>
+        <button class="legal-link-btn" onclick="openLegal('revisions')" data-en="Revisions" data-es="Revisiones">Revisions</button>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="reveal-right">
+      <div class="form-card" id="formCard">
+        <div class="form-card-title" data-en="Start Your Project" data-es="Inicia Tu Proyecto">Start Your Project</div>
+        <div class="form-card-sub" data-en="Fill in your details and we'll get back to you with a full quote." data-es="Llena tus datos y te contactaremos con una cotización completa.">Fill in your details and we'll get back to you with a full quote.</div>
+
+        <div class="form-fields" id="formFields">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" data-en="Full Name" data-es="Nombre Completo">Full Name <span class="req">*</span></label>
+              <input class="form-input" id="f_name" type="text" placeholder="Your name" data-ph-en="Your name" data-ph-es="Tu nombre"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-en="Email" data-es="Correo Electrónico">Email <span class="req">*</span></label>
+              <input class="form-input" id="f_email" type="email" placeholder="your@email.com" data-ph-en="your@email.com" data-ph-es="tu@correo.com"/>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" data-en="Business / Brand" data-es="Negocio / Marca">Business / Brand <span class="req">*</span></label>
+              <input class="form-input" id="f_brand" type="text" placeholder="Brand name" data-ph-en="Brand name" data-ph-es="Nombre de tu marca"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-en="Country" data-es="País">Country <span class="req">*</span></label>
+              <input class="form-input" id="f_country" type="text" placeholder="Country" data-ph-en="Country" data-ph-es="País"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="Project Type — Select all that apply" data-es="Tipo de Proyecto — Selecciona los que aplican">Project Type — Select all that apply <span class="req">*</span></label>
+            <div class="form-checks">
+              <label class="form-check"><input type="checkbox" value="Landing Page"/><span class="form-check-label">Landing Page</span></label>
+              <label class="form-check"><input type="checkbox" value="Professional Website" data-en="Professional Website" data-es="Sitio Web Profesional"/><span class="form-check-label" data-en="Professional Website" data-es="Sitio Web Profesional">Professional Website</span></label>
+              <label class="form-check"><input type="checkbox" value="AI Assistant" data-en="AI Assistant" data-es="Asistente IA"/><span class="form-check-label" data-en="AI Assistant" data-es="Asistente IA">AI Assistant</span></label>
+              <label class="form-check"><input type="checkbox" value="QR Business Card" data-en="QR Business Card" data-es="Tarjeta QR"/><span class="form-check-label" data-en="QR Business Card" data-es="Tarjeta QR">QR Business Card</span></label>
+              <label class="form-check"><input type="checkbox" value="SIGNAL"/><span class="form-check-label">SIGNAL</span></label>
+              <label class="form-check"><input type="checkbox" value="PULSE"/><span class="form-check-label">PULSE</span></label>
+              <label class="form-check"><input type="checkbox" value="OMNISTACK"/><span class="form-check-label">OMNISTACK</span></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="Approximate Budget" data-es="Presupuesto Aproximado">Approximate Budget <span class="req">*</span></label>
+            <select class="form-select" id="f_budget">
+              <option value="" data-en="Select a range..." data-es="Selecciona un rango...">Select a range...</option>
+              <option value="$15–50 USD">$15–50 USD</option>
+              <option value="$50–120 USD">$50–120 USD</option>
+              <option value="$120–250 USD">$120–250 USD</option>
+              <option value="$250–450 USD">$250–450 USD</option>
+              <option value="$450+ USD" data-en="$450+ USD (Custom / OMNISTACK)" data-es="$450+ USD (Personalizado / OMNISTACK)">$450+ USD (Custom / OMNISTACK)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="Main Goal" data-es="Objetivo Principal">Main Goal <span class="req">*</span></label>
+            <input class="form-input" id="f_goal" type="text" placeholder="e.g. Attract more clients, automate support..." data-ph-en="e.g. Attract more clients, automate support..." data-ph-es="Ej. Atraer más clientes, automatizar soporte..."/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="References (optional)" data-es="Referencias (opcional)">References (optional)</label>
+            <input class="form-input" id="f_refs" type="text" placeholder="Links or inspirations" data-ph-en="Links or inspirations" data-ph-es="Links o inspiraciones"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-en="Project Description" data-es="Descripción del Proyecto">Project Description <span class="req">*</span></label>
+            <textarea class="form-textarea" id="f_desc" placeholder="Tell us about your project..." data-ph-en="Tell us about your project..." data-ph-es="Cuéntanos sobre tu proyecto..."></textarea>
+          </div>
+          <label class="pdf-check">
+            <input type="checkbox" id="f_pdf"/>
+            <span class="pdf-check-text" data-en="<strong>I have my PDF Brief ready</strong> to attach to the email. I understand that development cannot begin without it." data-es="<strong>Tengo mi Brief en PDF listo</strong> para adjuntarlo al correo. Entiendo que el desarrollo no puede comenzar sin él."><strong>I have my PDF Brief ready</strong> to attach to the email. I understand that development cannot begin without it.</span>
+          </label>
+          <button class="form-submit" onclick="openPolicyModal()" data-en="Review Policies & Send →" data-es="Revisar Políticas y Enviar →">Review Policies & Send →</button>
+          <p class="form-note" data-en="Your brief will open in Gmail. Attach your PDF brief before sending." data-es="Tu brief se abrirá en Gmail. Adjunta tu PDF brief antes de enviar.">Your brief will open in Gmail. Attach your PDF brief before sending.</p>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div id="formSuccess" style="display:none;flex-direction:column;align-items:center;text-align:center;padding:40px 20px;gap:16px">
+          <div style="font-size:44px">🚀</div>
+          <div style="font-family:var(--font-h);font-size:22px;font-weight:700;color:var(--text)" data-en="Brief Sent!" data-es="¡Brief Enviado!">Brief Sent!</div>
+          <p style="font-size:14px;color:var(--text2);max-width:300px;line-height:1.7;font-weight:300" data-en="Gmail opened with your project details. Attach your PDF brief and send. We'll reply within 24–48 hours." data-es="Gmail se abrió con los detalles de tu proyecto. Adjunta tu PDF brief y envía. Te respondemos en 24–48 horas.">Gmail opened with your project details. Attach your PDF brief and send. We'll reply within 24–48 hours.</p>
+          <a href="mailto:rgslabs.contact@gmail.com" style="font-size:13px;color:var(--purple);text-decoration:none;border:1px solid rgba(168,85,247,.3);border-radius:8px;padding:10px 20px;background:var(--purple3)">rgslabs.contact@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo-text">RGS<span>.</span>Labs™</div>
+      <div class="footer-tagline" data-en="Modern technology ecosystem — AI, automation, branding & digital experiences." data-es="Ecosistema tecnológico moderno — IA, automatización, branding y experiencias digitales.">Modern technology ecosystem.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a href="https://gamejolt.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.5 17.5h-8v-7h8v7zm0-9h-8v-2h8v2zm5 9h-3v-4h-2v4h-1v-6h6v6zm0-8h-6v-3h6v3z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 RGS Labs™. All rights reserved.</div>
+    </div>
+    <div class="footer-col"><h4 data-en="Company" data-es="Empresa">Company</h4><ul><li><a href="about.html" data-en="About" data-es="Nosotros">About</a></li><li><a href="projects.html" data-en="Projects" data-es="Proyectos">Projects</a></li><li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li></ul></div>
+    <div class="footer-col"><h4 data-en="Services" data-es="Servicios">Services</h4><ul><li><a href="services.html">Landing Page</a></li><li><a href="services.html" data-en="Website" data-es="Sitio Web">Website</a></li><li><a href="services.html" data-en="AI Assistant" data-es="Asistente IA">AI Assistant</a></li><li><a href="services.html" data-en="Brand Identity" data-es="Identidad de Marca">Brand Identity</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a onclick="openLegal('privacy')" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</a></li><li><a onclick="openLegal('terms')" data-en="Terms of Service" data-es="Términos">Terms of Service</a></li><li><a onclick="openLegal('payments')" data-en="Payment Policy" data-es="Pagos">Payment Policy</a></li><li><a onclick="openLegal('revisions')" data-en="Revision Policy" data-es="Revisiones">Revision Policy</a></li></ul></div>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const dot=document.getElementById('cursorDot');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'});
+document.addEventListener('mousedown',()=>dot.classList.add('clicking'));
+document.addEventListener('mouseup',()=>dot.classList.remove('clicking'));
+document.querySelectorAll('a,button,label').forEach(el=>{el.addEventListener('mouseenter',()=>dot.classList.add('hover'));el.addEventListener('mouseleave',()=>dot.classList.remove('hover'))});
+
+// NAV
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
+
+// REVEAL
+const revObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revObs.observe(el));
+
+// LANG
+let lang='en';
+function setLang(l){
+  lang=l;
+  document.getElementById('btnEN').classList.toggle('active',l==='en');
+  document.getElementById('btnES').classList.toggle('active',l==='es');
+  document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+l);if(v)el.innerHTML=v});
+  document.querySelectorAll('[data-ph-en]').forEach(el=>{el.placeholder=el.getAttribute('data-ph-'+l)||el.getAttribute('data-ph-en')});
+  document.querySelectorAll('select option[data-en]').forEach(opt=>{opt.textContent=opt.getAttribute('data-'+l)||opt.getAttribute('data-en')});
+}
+
+// POLICY MODAL
+function openPolicyModal(){
+  // Validate required fields first
+  const name=document.getElementById('f_name').value.trim();
+  const email=document.getElementById('f_email').value.trim();
+  const brand=document.getElementById('f_brand').value.trim();
+  const country=document.getElementById('f_country').value.trim();
+  const budget=document.getElementById('f_budget').value;
+  const goal=document.getElementById('f_goal').value.trim();
+  const desc=document.getElementById('f_desc').value.trim();
+  const types=[...document.querySelectorAll('.form-checks input:checked')].map(i=>i.value);
+  if(!name||!email||!brand||!country||!budget||!goal||!desc||types.length===0){
+    const msg=lang==='es'?'Por favor completa todos los campos requeridos (*) y selecciona al menos un tipo de proyecto.':'Please fill in all required fields (*) and select at least one project type.';
+    alert(msg);return;
+  }
+  document.getElementById('policyCheck').checked=false;
+  document.getElementById('policyAcceptBtn').disabled=true;
+  document.getElementById('policyModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closePolicyModal(){
+  document.getElementById('policyModal').classList.remove('active');
+  document.body.style.overflow='';
+}
+function toggleAccept(){
+  document.getElementById('policyAcceptBtn').disabled=!document.getElementById('policyCheck').checked;
+}
+function confirmAndSend(){
+  closePolicyModal();
+  buildAndSendGmail();
+}
+
+// BUILD GMAIL MAILTO
+function buildAndSendGmail(){
+  const name=document.getElementById('f_name').value.trim();
+  const email=document.getElementById('f_email').value.trim();
+  const brand=document.getElementById('f_brand').value.trim();
+  const country=document.getElementById('f_country').value.trim();
+  const budget=document.getElementById('f_budget').value;
+  const goal=document.getElementById('f_goal').value.trim();
+  const refs=document.getElementById('f_refs').value.trim()||'None provided';
+  const desc=document.getElementById('f_desc').value.trim();
+  const types=[...document.querySelectorAll('.form-checks input:checked')].map(i=>i.value).join(', ');
+  const pdfReady=document.getElementById('f_pdf').checked?'✅ YES — PDF brief ready to attach':'⚠️ NOT YET — will send separately';
+  const subject=`[RGS Labs™] New Project Brief — ${brand}`;
+  const body=`🚀 NEW PROJECT BRIEF — RGS Labs™
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 CONTACT INFO
+Name: ${name}
+Email: ${email}
+Business / Brand: ${brand}
+Country: ${country}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 PROJECT DETAILS
+Type(s): ${types}
+Budget: ${budget}
+Main Goal: ${goal}
+References: ${refs}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 DESCRIPTION
+${desc}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📂 PDF BRIEF STATUS
+${pdfReady}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Client has confirmed reading and agreeing to:
+Privacy Policy · Terms of Service · Payment Policy · Revision Policy
+
+Sent via RGS Labs™ Website — rgslabs.com`;
+  const gmailURL=`https://mail.google.com/mail/?view=cm&to=rgslabs.contact@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(gmailURL,'_blank');
+  document.getElementById('formFields').style.display='none';
+  document.getElementById('formSuccess').style.display='flex';
+}
+
+// LEGAL MODALS
+const legalData={
+  privacy:{en:{title:'Privacy Policy',html:`<div class="modal-section"><h3>Information We Collect</h3><p>RGS Labs™ collects only information you voluntarily provide when contacting us: your name, email, business details and project information. We do not collect data without explicit consent.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>How We Use It</h3><ul><li>To respond to project inquiries</li><li>To communicate during development</li><li>To send previews, updates and delivery files</li><li>We never sell or share your data with third parties</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Client Responsibility</h3><p>The client is fully responsible for all content, images and information they provide. RGS Labs™ assumes no liability for false, misleading or legally problematic content submitted by the client.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Contact</h3><p>Privacy questions: rgslabs.contact@gmail.com</p></div>`},es:{title:'Política de Privacidad',html:`<div class="modal-section"><h3>Información que Recopilamos</h3><p>RGS Labs™ solo recopila información que proporcionas voluntariamente: tu nombre, correo, datos del negocio y del proyecto. No recopilamos datos sin consentimiento explícito.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Cómo la Usamos</h3><ul><li>Para responder consultas de proyectos</li><li>Para comunicarnos durante el desarrollo</li><li>Para enviar previews, actualizaciones y archivos</li><li>Nunca vendemos ni compartimos tus datos con terceros</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Responsabilidad del Cliente</h3><p>El cliente es totalmente responsable del contenido proporcionado. RGS Labs™ no asume responsabilidad por contenido falso o problemático enviado por el cliente.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Contacto</h3><p>rgslabs.contact@gmail.com</p></div>`}},
+  terms:{en:{title:'Terms of Service',html:`<div class="modal-section"><h3>PDF Brief Required</h3><p>RGS Labs™ will NOT begin any project without a complete PDF brief from the client. The brief must contain: business info, copy, images, objectives, references and contact information. Delays from incomplete briefs are the client's responsibility.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Intellectual Property</h3><p>Full ownership transfers to the client upon final payment. RGS Labs™ retains the right to feature the work in our portfolio unless the client requests otherwise in writing.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Client Responsibilities</h3><p>The client is solely responsible for the accuracy and legality of all content provided. RGS Labs™ is not liable for any issues arising from client-provided content.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Extra Support</h3><p>Support beyond the original project scope may incur additional fees, including new features, post-delivery updates or changes after project close.</p></div>`},es:{title:'Términos de Servicio',html:`<div class="modal-section"><h3>Brief en PDF Requerido</h3><p>RGS Labs™ NO comenzará ningún proyecto sin un brief en PDF completo del cliente con: información del negocio, textos, imágenes, objetivos y referencias.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Propiedad Intelectual</h3><p>La propiedad completa pasa al cliente con el pago final. RGS Labs™ puede mostrar el trabajo en su portfolio a menos que el cliente solicite lo contrario por escrito.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Responsabilidades del Cliente</h3><p>El cliente es el único responsable de la exactitud y legalidad del contenido proporcionado.</p></div>`}},
+  payments:{en:{title:'Payment Policy',html:`<div class="modal-section"><h3>Payment Structure</h3><ul><li><strong>50% Deposit</strong> — Required before any work begins. Secures your project slot.</li><li><strong>50% Final Payment</strong> — Required before delivery. Files are not transferred until confirmed.</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Refund Policy</h3><p>The 50% deposit is non-refundable once development begins. Cancellation before start may qualify for partial refund at RGS Labs' discretion. No refunds after final delivery and acceptance.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Late Payments</h3><p>If final payment is not received within 7 days of preview approval, the project goes on hold. Files will not be transferred until full payment is confirmed.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Pricing Reference</h3><ul><li>Landing Page: $50–120 USD</li><li>Professional Website: $150–400 USD</li><li>AI Assistant: +$30–100 USD (add-on)</li><li>QR Business Card: $15–40 USD</li><li>SIGNAL: From $100 USD</li><li>PULSE: From $220 USD</li><li>OMNISTACK: From $450 USD</li></ul></div>`},es:{title:'Política de Pagos',html:`<div class="modal-section"><h3>Estructura de Pagos</h3><ul><li><strong>50% Anticipo</strong> — Requerido antes de comenzar.</li><li><strong>50% Pago Final</strong> — Requerido antes de la entrega. Los archivos no se transfieren hasta confirmar el pago.</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Reembolsos</h3><p>El anticipo del 50% no es reembolsable una vez iniciado el desarrollo. No se emiten reembolsos tras la entrega final.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Pagos Tardíos</h3><p>Si el pago final no se recibe en 7 días tras aprobar el preview, el proyecto se pausa.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Precios de Referencia</h3><ul><li>Landing Page: $50–120 USD</li><li>Sitio Web Profesional: $150–400 USD</li><li>Asistente IA: +$30–100 USD</li><li>Tarjeta QR: $15–40 USD</li><li>SIGNAL: Desde $100 USD</li><li>PULSE: Desde $220 USD</li><li>OMNISTACK: Desde $450 USD</li></ul></div>`}},
+  revisions:{en:{title:'Revision Policy',html:`<div class="modal-section"><h3>Included Revisions</h3><p>Every project includes up to <strong>2 revision rounds</strong> at no extra cost. A revision round is one consolidated list of changes submitted after reviewing the preview.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>What Counts as a Revision</h3><ul><li>Text or copy changes</li><li>Color or style adjustments within scope</li><li>Layout tweaks within scope</li><li>Minor functionality adjustments</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>What Is NOT a Revision</h3><ul><li>New sections or pages outside original scope</li><li>Complete redesigns or direction changes</li><li>New features after project kickoff</li><li>Changes caused by incomplete client brief</li></ul><p>These are quoted separately as additional work.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Revision Timeframe</h3><p>Revisions must be submitted within 5 business days of receiving the preview. No response within this period may result in the project being considered approved and closed.</p></div>`},es:{title:'Política de Revisiones',html:`<div class="modal-section"><h3>Revisiones Incluidas</h3><p>Cada proyecto incluye hasta <strong>2 rondas de revisión</strong> sin costo adicional.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Qué Cuenta como Revisión</h3><ul><li>Cambios en textos</li><li>Ajustes de color o estilo dentro del alcance</li><li>Modificaciones de diseño dentro del alcance</li><li>Ajustes menores de funcionalidad</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Qué NO es una Revisión</h3><ul><li>Nuevas secciones fuera del alcance original</li><li>Rediseños completos o cambios de dirección</li><li>Nuevas funciones tras el inicio</li><li>Cambios por brief incompleto</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Tiempo para Revisar</h3><p>Las revisiones deben enviarse dentro de los 5 días hábiles tras recibir el preview.</p></div>`}}
+};
+function openLegal(key){
+  const m=legalData[key][lang]||legalData[key]['en'];
+  document.getElementById('modalTitle').textContent=m.title;
+  document.getElementById('modalContent').innerHTML=m.html;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function closeAllLegal(){document.getElementById('modalOverlay').classList.remove('active')}
+function closeLegalModal(e){if(e.target===document.getElementById('modalOverlay'))closeAllLegal()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAllLegal();closePolicyModal()}});
+</script>
+</body>
+</html>

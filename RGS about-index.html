@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>About — RGS Labs™</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050505;--bg2:#0a0a0a;--bg3:#101010;--bg4:#161616;--border:#1a1a1a;--border2:#242424;--border3:#303030;--text:#efefef;--text2:#787878;--text3:#3d3d3d;--text4:#252525;--purple:#a855f7;--purple2:#7c3aed;--purple3:rgba(124,58,237,.12);--purple4:rgba(168,85,247,.06);--purple-glow:rgba(168,85,247,.18);--font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;--ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:1;mix-blend-mode:overlay}
+.cursor-dot{position:fixed;width:6px;height:6px;background:var(--purple);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s var(--ease),height .2s var(--ease),background .2s;will-change:left,top}
+.cursor-dot.hover{width:10px;height:10px;background:#c084fc}
+.cursor-dot.clicking{width:4px;height:4px;opacity:.7}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
+nav.scrolled{background:rgba(5,5,5,.92);backdrop-filter:blur(28px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;cursor:none}
+.nav-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.nav-logo-text span{color:var(--purple)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;font-weight:400;color:var(--text2);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s;cursor:none;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--purple);transition:width .3s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-toggle{display:flex;align-items:center;border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg2)}
+.lang-btn{font-size:11px;padding:5px 12px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-family:var(--font-b);font-weight:500;letter-spacing:.04em;transition:all .25s}
+.lang-btn.active{background:var(--purple2);color:#fff}
+.nav-cta{background:var(--purple2);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .25s;cursor:none;border:1px solid transparent;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);opacity:0;transition:opacity .2s}
+.nav-cta:hover::before{opacity:1}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(124,58,237,.4)}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.95);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+.stagger-1{transition-delay:.05s}.stagger-2{transition-delay:.12s}.stagger-3{transition-delay:.2s}.stagger-4{transition-delay:.28s}
+section{padding:128px 48px;position:relative;z-index:2}
+.container{max-width:1100px;margin:0 auto}
+.sec-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.sec-title{font-family:var(--font-h);font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--text);margin-bottom:20px}
+.sec-sub{font-size:17px;color:var(--text2);max-width:520px;line-height:1.7;font-weight:300}
+.btn-primary{background:var(--purple2);color:#fff;padding:15px 34px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease);cursor:none;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(124,58,237,.45)}
+.btn-ghost{border:1px solid var(--border2);color:var(--text2);padding:15px 34px;border-radius:10px;font-size:15px;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease);cursor:none;background:rgba(255,255,255,.02)}
+.btn-ghost:hover{border-color:var(--border3);color:var(--text);transform:translateY(-2px)}
+
+/* PAGE HERO */
+.page-hero{min-height:60vh;display:flex;align-items:flex-end;padding:120px 48px 80px;position:relative;overflow:hidden;background:var(--bg)}
+.page-hero-ambient{position:absolute;top:0;right:0;width:600px;height:400px;background:radial-gradient(ellipse,rgba(124,58,237,.12),transparent 70%);pointer-events:none;animation:ambientPulse 6s ease-in-out infinite}
+@keyframes ambientPulse{0%,100%{opacity:.6}50%{opacity:1}}
+.page-hero-content{max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:2}
+.page-hero-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.page-hero-label::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.page-hero-title{font-family:var(--font-h);font-size:clamp(52px,7vw,88px);font-weight:800;line-height:.92;letter-spacing:-.04em;color:var(--text);margin-bottom:24px}
+.page-hero-title em{font-style:normal;color:var(--text3);-webkit-text-stroke:1px var(--text4)}
+.page-hero-sub{font-size:18px;color:var(--text2);max-width:540px;line-height:1.7;font-weight:300}
+
+/* ABOUT GRID */
+#about-story{background:var(--bg2)}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;margin-top:72px}
+.story-text p{color:var(--text2);font-size:15px;line-height:1.9;margin-bottom:24px;font-weight:300}
+.story-text p strong{color:var(--text);font-weight:500}
+.story-aside{display:flex;flex-direction:column;gap:2px;background:var(--border)}
+.story-stat{background:var(--bg3);padding:32px 28px;transition:background .3s}
+.story-stat:hover{background:var(--bg4)}
+.story-stat-num{font-family:var(--font-h);font-size:40px;font-weight:800;color:var(--text);line-height:1;margin-bottom:6px}
+.story-stat-num span{color:var(--purple)}
+.story-stat-label{font-size:12px;color:var(--text2);letter-spacing:.03em}
+
+/* VALUES */
+#values{background:var(--bg)}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-top:72px}
+.value-card{background:var(--bg2);padding:44px 36px;transition:background .3s;position:relative;overflow:hidden}
+.value-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);opacity:0;transition:opacity .4s}
+.value-card:hover{background:var(--bg3)}
+.value-card:hover::after{opacity:1}
+.value-num{font-size:10px;color:var(--purple);font-family:var(--font-h);font-weight:700;letter-spacing:.14em;margin-bottom:20px}
+.value-title{font-family:var(--font-h);font-size:18px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:-.01em}
+.value-desc{font-size:13px;color:var(--text2);line-height:1.8;font-weight:300}
+
+/* MEET RAB */
+#meetrab{background:var(--bg2);overflow:hidden}
+.meetrab-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto}
+.meetrab-video-col{position:relative}
+.meetrab-video-glow{position:absolute;inset:-60px;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(124,58,237,.22),rgba(168,85,247,.08) 50%,transparent 75%);filter:blur(30px);animation:ambientPulse 5s ease-in-out infinite;pointer-events:none;z-index:0}
+.meetrab-video-frame{position:relative;z-index:1;border-radius:18px;overflow:hidden;border:1px solid rgba(168,85,247,.2);background:var(--bg3);aspect-ratio:9/16;max-width:340px;margin:0 auto}
+.meetrab-video-frame iframe{width:100%;height:100%;border:none;display:block}
+.meetrab-frame-border{position:absolute;inset:-1px;border-radius:19px;background:linear-gradient(160deg,rgba(168,85,247,.4),transparent 60%);z-index:2;pointer-events:none}
+.meetrab-text-col{padding:20px 0}
+.meetrab-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple);font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.meetrab-kicker::before{content:'';width:24px;height:1px;background:var(--purple);opacity:.6}
+.meetrab-headline{font-family:var(--font-h);font-size:clamp(36px,4vw,58px);font-weight:800;line-height:.95;letter-spacing:-.035em;color:var(--text);margin-bottom:28px}
+.meetrab-headline span{color:var(--text4);-webkit-text-stroke:1px var(--text3)}
+.meetrab-body{display:flex;flex-direction:column;gap:18px;margin-bottom:36px}
+.meetrab-body p{font-size:15px;color:var(--text2);line-height:1.85;font-weight:300}
+.meetrab-body p strong{color:var(--text);font-weight:500}
+.meetrab-quote{border-left:2px solid var(--purple);padding-left:20px;margin:8px 0}
+.meetrab-quote p{font-size:16px;color:var(--text);font-style:italic;line-height:1.7}
+.meetrab-cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.meetrab-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);border:1px solid var(--border2);border-radius:100px;padding:5px 14px;letter-spacing:.04em}
+
+/* PROCESS */
+#process{background:var(--bg)}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);margin-top:72px}
+.proc-step{background:var(--bg2);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s}
+.proc-step:hover{background:var(--bg3)}
+.proc-line{position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--border2);transition:background .3s}
+.proc-step:hover .proc-line{background:var(--purple)}
+.proc-num{font-size:10px;color:var(--purple);font-family:var(--font-h);font-weight:700;letter-spacing:.14em;margin-bottom:20px}
+.proc-title{font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px}
+.proc-desc{font-size:13px;color:var(--text2);line-height:1.7;font-weight:300}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:52px 48px;position:relative;z-index:2}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px}
+.footer-brand{display:flex;flex-direction:column;gap:14px}
+.footer-logo-text{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.footer-logo-text span{color:var(--purple)}
+.footer-tagline{font-size:13px;color:var(--text3);line-height:1.7;max-width:200px}
+.footer-socials{display:flex;gap:10px;align-items:center}
+.social-link{width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s var(--ease);position:relative;overflow:hidden}
+.social-link::before{content:'';position:absolute;inset:0;background:var(--purple3);opacity:0;transition:opacity .3s}
+.social-link:hover{border-color:rgba(168,85,247,.4);transform:translateY(-3px);box-shadow:0 8px 24px rgba(124,58,237,.25)}
+.social-link:hover::before{opacity:1}
+.social-link svg{width:16px;height:16px;fill:var(--text3);transition:fill .2s;position:relative;z-index:1}
+.social-link:hover svg{fill:var(--purple)}
+.footer-copy{font-size:11px;color:var(--text4);letter-spacing:.03em}
+.footer-col h4{font-family:var(--font-h);font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{font-size:13px;color:var(--text3);text-decoration:none;transition:color .2s;cursor:none}
+.footer-col ul a:hover{color:var(--text2)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(12px)}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:700px;max-height:82vh;overflow-y:auto;padding:52px;transform:translateY(20px);transition:transform .4s var(--ease);scrollbar-width:thin;scrollbar-color:var(--border3) transparent}
+.modal-overlay.active .modal-box{transform:translateY(0)}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px}
+.modal-title{font-family:var(--font-h);font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.025em}
+.modal-close{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;margin-left:20px}
+.modal-close:hover{border-color:var(--purple);color:var(--purple)}
+.modal-section{margin-bottom:28px}
+.modal-section h3{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.modal-section p,.modal-section li{font-size:14px;color:var(--text2);line-height:1.85;font-weight:300}
+.modal-section ul{padding-left:16px}
+.modal-section li{margin-bottom:7px}
+.modal-divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+@media(max-width:900px){
+  nav{padding:0 20px}.nav-links{display:none}
+  section{padding:80px 20px}.page-hero{padding:100px 20px 60px}
+  .story-grid,.meetrab-wrap,.values-grid,.proc-grid{grid-template-columns:1fr}
+  .meetrab-video-frame{max-width:100%;aspect-ratio:16/9}
+  .footer-inner{grid-template-columns:1fr;gap:32px}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)"><div class="modal-box"><div class="modal-header"><div class="modal-title" id="modalTitle"></div><button class="modal-close" onclick="closeAllModals()">✕</button></div><div id="modalContent"></div></div></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-text">RGS<span>.</span>Labs™</div></a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+    <li><a href="about.html" class="active" data-en="About" data-es="Nosotros">About</a></li>
+    <li><a href="services.html" data-en="Services" data-es="Servicios">Services</a></li>
+    <li><a href="projects.html" data-en="Projects" data-es="Proyectos">Projects</a></li>
+    <li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle"><button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button><button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button></div>
+    <a href="contact.html" class="nav-cta" data-en="Start a Project" data-es="Iniciar Proyecto">Start a Project</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-ambient"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-label" data-en="About RGS Labs" data-es="Sobre RGS Labs">About RGS Labs</div>
+    <h1 class="page-hero-title" data-en="Not just a studio.<br><em>A technology</em><br>ecosystem." data-es="No solo un estudio.<br><em>Un ecosistema</em><br>tecnológico.">Not just a studio.<br><em>A technology</em><br>ecosystem.</h1>
+    <p class="page-hero-sub" data-en="RGS Labs™ was built with one conviction: the future of digital belongs to those who combine technology, design and intelligence into one seamless experience." data-es="RGS Labs™ fue construido con una convicción: el futuro digital pertenece a quienes combinan tecnología, diseño e inteligencia en una experiencia unificada.">RGS Labs™ was built with one conviction: the future of digital belongs to those who combine technology, design and intelligence into one seamless experience.</p>
+  </div>
+</div>
+
+<!-- STORY -->
+<section id="about-story">
+  <div class="container">
+    <div class="sec-label reveal" data-en="Our Story" data-es="Nuestra Historia">Our Story</div>
+    <h2 class="sec-title reveal" data-en="From creator to<br>technology ecosystem." data-es="De creador a<br>ecosistema tecnológico.">From creator to<br>technology ecosystem.</h2>
+    <div class="story-grid">
+      <div class="story-text reveal-left">
+        <p data-en="<strong>RGS Labs™</strong> (formerly RabGamesStudio™) began as a creative project and evolved into something much larger — a modern technology studio committed to building digital experiences that actually matter." data-es="<strong>RGS Labs™</strong> (antes RabGamesStudio™) comenzó como un proyecto creativo y evolucionó hacia algo mucho más grande — un estudio tecnológico moderno comprometido a construir experiencias digitales que realmente importan."><strong>RGS Labs™</strong> (formerly RabGamesStudio™) began as a creative project and evolved into something much larger — a modern technology studio committed to building digital experiences that actually matter.</p>
+        <p data-en="We don't sell websites. We build <strong>digital presence</strong>, automate workflows, craft AI-powered tools and create brand identities that command attention in a saturated digital world." data-es="No vendemos páginas web. Construimos <strong>presencia digital</strong>, automatizamos flujos, creamos herramientas de IA y desarrollamos identidades de marca que generan autoridad en un mundo digital saturado.">We don't sell websites. We build <strong>digital presence</strong>, automate workflows, craft AI-powered tools and create brand identities that command attention in a saturated digital world.</p>
+        <p data-en="The name changed. The ambition didn't. Every product, service and tool we build is designed to push the standard of what modern digital experiences can be." data-es="El nombre cambió. La ambición no. Cada producto, servicio y herramienta que construimos está diseñado para elevar el estándar de lo que las experiencias digitales modernas pueden ser.">The name changed. The ambition didn't. Every product, service and tool we build is designed to push the standard of what modern digital experiences can be.</p>
+      </div>
+      <div class="story-aside reveal-right">
+        <div class="story-stat reveal-scale stagger-1"><div class="story-stat-num">5<span>+</span></div><div class="story-stat-label" data-en="Core Services" data-es="Servicios Principales">Core Services</div></div>
+        <div class="story-stat reveal-scale stagger-2"><div class="story-stat-num">3<span>+</span></div><div class="story-stat-label" data-en="Active Divisions" data-es="Divisiones Activas">Active Divisions</div></div>
+        <div class="story-stat reveal-scale stagger-3"><div class="story-stat-num" style="color:var(--purple);font-size:28px">AI</div><div class="story-stat-label" data-en="Powered Products" data-es="Productos con IA">Powered Products</div></div>
+        <div class="story-stat reveal-scale stagger-4"><div class="story-stat-num" style="color:var(--purple)">∞</div><div class="story-stat-label" data-en="Long-Term Vision" data-es="Visión a Largo Plazo">Long-Term Vision</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section id="values">
+  <div class="container">
+    <div class="sec-label reveal" data-en="What We Stand For" data-es="En lo que Creemos">What We Stand For</div>
+    <h2 class="sec-title reveal" data-en="Principles that<br>drive every decision." data-es="Principios que guían<br>cada decisión.">Principles that<br>drive every decision.</h2>
+    <div class="values-grid">
+      <div class="value-card reveal stagger-1"><div class="value-num">01</div><div class="value-title" data-en="Intentionality" data-es="Intencionalidad">Intentionality</div><div class="value-desc" data-en="Nothing we build is accidental. Every pixel, every word, every animation exists for a reason — to serve your brand and your audience." data-es="Nada de lo que construimos es accidental. Cada píxel, cada palabra, cada animación existe por una razón — para servir a tu marca y tu audiencia.">Nothing we build is accidental. Every pixel, every word, every animation exists for a reason — to serve your brand and your audience.</div></div>
+      <div class="value-card reveal stagger-2"><div class="value-num">02</div><div class="value-title" data-en="Technology First" data-es="Tecnología Primero">Technology First</div><div class="value-desc" data-en="We approach every project as a technology problem, not just a design task. AI, automation and systems thinking are part of everything we build." data-es="Abordamos cada proyecto como un problema tecnológico, no solo una tarea de diseño. La IA, automatización y el pensamiento sistémico son parte de todo lo que construimos.">We approach every project as a technology problem, not just a design task. AI, automation and systems thinking are part of everything we build.</div></div>
+      <div class="value-card reveal stagger-3"><div class="value-num">03</div><div class="value-title" data-en="Premium is a Standard" data-es="Lo Premium es un Estándar">Premium is a Standard</div><div class="value-desc" data-en="We believe premium digital presence shouldn't be exclusive. Every client — regardless of size — deserves work that looks and feels world-class." data-es="Creemos que la presencia digital premium no debería ser exclusiva. Cada cliente, sin importar su tamaño, merece un trabajo que se vea y sienta de clase mundial.">We believe premium digital presence shouldn't be exclusive. Every client — regardless of size — deserves work that looks and feels world-class.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEET RAB -->
+<section id="meetrab">
+  <div class="meetrab-wrap">
+    <div class="meetrab-video-col reveal-left">
+      <div class="meetrab-video-glow"></div>
+      <div class="meetrab-video-frame">
+        <iframe id="founderVideo" src="https://www.youtube.com/embed/WbXe53iukx0?rel=0&modestbranding=1&playsinline=1" allow="encrypted-media" allowfullscreen></iframe>
+        <div class="meetrab-frame-border"></div>
+      </div>
+    </div>
+    <div class="meetrab-text-col reveal-right">
+      <div class="meetrab-kicker" data-en="Meet the Founder" data-es="Conoce al Fundador">Meet the Founder</div>
+      <h2 class="meetrab-headline" data-en="Built by someone<br>who <span>refused</span><br>to wait." data-es="Construido por alguien<br>que <span>se negó</span><br>a esperar.">Built by someone<br>who <span>refused</span><br>to wait.</h2>
+      <div class="meetrab-body">
+        <p data-en="My name is <strong>Rab</strong>. I'm the founder of RGS Labs™ — and I started building real technology before most people my age started thinking about it." data-es="Mi nombre es <strong>Rab</strong>. Soy el fundador de RGS Labs™ — y comencé a construir tecnología real antes de que la mayoría de personas de mi edad empezaran a pensar en ello.">My name is <strong>Rab</strong>. I'm the founder of RGS Labs™ — and I started building real technology before most people my age started thinking about it.</p>
+        <div class="meetrab-quote">
+          <p data-en="I don't just design pages — I build ecosystems. AI tools, automation systems, premium digital experiences. Everything I make is intentional." data-es="No solo diseño páginas — construyo ecosistemas. Herramientas de IA, sistemas de automatización, experiencias digitales premium. Todo lo que hago es intencional.">"I don't just design pages — I build ecosystems. AI tools, automation systems, premium digital experiences. Everything I make is intentional."</p>
+        </div>
+        <p data-en="RGS Labs™ was born from the belief that <strong>premium technology shouldn't be exclusive</strong>. That great design, real automation and intelligent tools should be accessible to any brand willing to evolve." data-es="RGS Labs™ nació de la creencia de que <strong>la tecnología premium no debería ser exclusiva</strong>. Que el gran diseño, la automatización real y las herramientas inteligentes deben ser accesibles para cualquier marca dispuesta a evolucionar.">RGS Labs™ was born from the belief that <strong>premium technology shouldn't be exclusive</strong>. That great design, real automation and intelligent tools should be accessible to any brand willing to evolve.</p>
+      </div>
+      <div class="meetrab-cta-row">
+        <a href="contact.html" class="btn-primary" data-en="Work with me →" data-es="Trabaja conmigo →">Work with me →</a>
+        <div class="meetrab-tag">🔬 <span data-en="RGS Labs™ · Est. 2024" data-es="RGS Labs™ · Est. 2024">RGS Labs™ · Est. 2024</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="sec-label reveal" data-en="Our Process" data-es="Nuestro Proceso">Our Process</div>
+    <h2 class="sec-title reveal" data-en="How we work." data-es="Cómo trabajamos.">How we work.</h2>
+    <div class="proc-grid">
+      <div class="proc-step reveal stagger-1"><div class="proc-line"></div><div class="proc-num">STEP 01</div><div class="proc-title" data-en="Contact" data-es="Contacto">Contact</div><div class="proc-desc" data-en="You reach out. We listen, understand your vision and define the project scope together." data-es="Tú contactas. Escuchamos, entendemos tu visión y definimos el alcance juntos.">You reach out. We listen, understand your vision and define the project scope together.</div></div>
+      <div class="proc-step reveal stagger-2"><div class="proc-line"></div><div class="proc-num">STEP 02</div><div class="proc-title" data-en="PDF Brief" data-es="Brief en PDF">PDF Brief</div><div class="proc-desc" data-en="You deliver your complete PDF brief — assets, copy, goals, references. 50% deposit confirms the project. No brief = no project." data-es="Entregas tu brief en PDF completo — assets, textos, objetivos, referencias. 50% de anticipo confirma el proyecto. Sin brief = sin proyecto.">You deliver your complete PDF brief — assets, copy, goals, references. 50% deposit confirms the project. No brief = no project.</div></div>
+      <div class="proc-step reveal stagger-3"><div class="proc-line"></div><div class="proc-num">STEP 03</div><div class="proc-title" data-en="Build & Review" data-es="Desarrollo y Revisión">Build & Review</div><div class="proc-desc" data-en="We build and send you a preview. Up to 2 revision rounds included in every project." data-es="Construimos y te enviamos un preview. Hasta 2 rondas de revisión incluidas en cada proyecto.">We build and send you a preview. Up to 2 revision rounds included in every project.</div></div>
+      <div class="proc-step reveal stagger-4"><div class="proc-line"></div><div class="proc-num">STEP 04</div><div class="proc-title" data-en="Deliver" data-es="Entrega">Deliver</div><div class="proc-desc" data-en="Final payment. Final delivery. Your digital ecosystem is live and ready to make an impression." data-es="Pago final. Entrega final. Tu ecosistema digital está listo para causar impresión.">Final payment. Final delivery. Your digital ecosystem is live and ready to make an impression.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo-text">RGS<span>.</span>Labs™</div>
+      <div class="footer-tagline" data-en="Modern technology ecosystem — AI, automation, branding & digital experiences." data-es="Ecosistema tecnológico moderno — IA, automatización, branding y experiencias digitales.">Modern technology ecosystem.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a href="https://gamejolt.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.5 17.5h-8v-7h8v7zm0-9h-8v-2h8v2zm5 9h-3v-4h-2v4h-1v-6h6v6zm0-8h-6v-3h6v3z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 RGS Labs™. All rights reserved.</div>
+    </div>
+    <div class="footer-col"><h4 data-en="Company" data-es="Empresa">Company</h4><ul><li><a href="about.html" data-en="About" data-es="Nosotros">About</a></li><li><a href="projects.html" data-en="Projects" data-es="Proyectos">Projects</a></li><li><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></li></ul></div>
+    <div class="footer-col"><h4 data-en="Services" data-es="Servicios">Services</h4><ul><li><a href="services.html">Landing Page</a></li><li><a href="services.html" data-en="Website" data-es="Sitio Web">Website</a></li><li><a href="services.html" data-en="AI Assistant" data-es="Asistente IA">AI Assistant</a></li><li><a href="services.html" data-en="Brand Identity" data-es="Identidad de Marca">Brand Identity</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a onclick="openModal('privacy')" data-en="Privacy Policy" data-es="Privacidad">Privacy Policy</a></li><li><a onclick="openModal('terms')" data-en="Terms of Service" data-es="Términos">Terms of Service</a></li><li><a onclick="openModal('payments')" data-en="Payment Policy" data-es="Pagos">Payment Policy</a></li><li><a onclick="openModal('revisions')" data-en="Revision Policy" data-es="Revisiones">Revision Policy</a></li></ul></div>
+  </div>
+</footer>
+
+<script>
+const dot=document.getElementById('cursorDot');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'});
+document.addEventListener('mousedown',()=>dot.classList.add('clicking'));
+document.addEventListener('mouseup',()=>dot.classList.remove('clicking'));
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>dot.classList.add('hover'));el.addEventListener('mouseleave',()=>dot.classList.remove('hover'))});
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
+const revObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el=>revObs.observe(el));
+const FOUNDER_EN='https://www.youtube.com/embed/WbXe53iukx0?rel=0&modestbranding=1&playsinline=1';
+const FOUNDER_ES='https://www.youtube.com/embed/ARFU4wS0HXA?rel=0&modestbranding=1&playsinline=1';
+let lang='en';
+function setLang(l){
+  lang=l;
+  document.getElementById('btnEN').classList.toggle('active',l==='en');
+  document.getElementById('btnES').classList.toggle('active',l==='es');
+  document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+l);if(v)el.innerHTML=v});
+  const fv=document.getElementById('founderVideo');if(fv)fv.src=l==='es'?FOUNDER_ES:FOUNDER_EN;
+}
+const modals={privacy:{en:{title:'Privacy Policy',html:`<div class="modal-section"><h3>Information We Collect</h3><p>RGS Labs™ collects only information you voluntarily provide: your name, email, and project details. We do not collect data without explicit consent.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Contact</h3><p>rgslabs.contact@gmail.com</p></div>`},es:{title:'Política de Privacidad',html:`<div class="modal-section"><h3>Información que Recopilamos</h3><p>RGS Labs™ solo recopila información que proporcionas voluntariamente. No compartimos tus datos con terceros.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Contacto</h3><p>rgslabs.contact@gmail.com</p></div>`}},terms:{en:{title:'Terms of Service',html:`<div class="modal-section"><h3>PDF Brief Required</h3><p>All projects require a complete PDF brief before development begins. No brief = no project.</p></div><hr class="modal-divider"/><div class="modal-section"><h3>Client Responsibilities</h3><p>The client is solely responsible for the accuracy and legality of all content provided.</p></div>`},es:{title:'Términos de Servicio',html:`<div class="modal-section"><h3>Brief en PDF Requerido</h3><p>Todos los proyectos requieren un brief en PDF completo antes de iniciar. Sin brief = sin proyecto.</p></div>`}},payments:{en:{title:'Payment Policy',html:`<div class="modal-section"><h3>Structure</h3><ul><li><strong>50% Deposit</strong> — Before work begins</li><li><strong>50% Final</strong> — Before delivery</li></ul></div><hr class="modal-divider"/><div class="modal-section"><h3>Refunds</h3><p>50% deposit is non-refundable once development begins.</p></div>`},es:{title:'Política de Pagos',html:`<div class="modal-section"><h3>Estructura</h3><ul><li><strong>50% Anticipo</strong> — Antes de comenzar</li><li><strong>50% Final</strong> — Antes de la entrega</li></ul></div>`}},revisions:{en:{title:'Revision Policy',html:`<div class="modal-section"><h3>Included</h3><p>Up to 2 revision rounds at no extra cost. Submit within 5 business days of preview.</p></div>`},es:{title:'Política de Revisiones',html:`<div class="modal-section"><h3>Incluido</h3><p>Hasta 2 rondas de revisión sin costo adicional. Enviar dentro de 5 días hábiles del preview.</p></div>`}}};
+function openModal(key){const m=modals[key][lang]||modals[key]['en'];document.getElementById('modalTitle').textContent=m.title;document.getElementById('modalContent').innerHTML=m.html;document.getElementById('modalOverlay').classList.add('active');document.body.style.overflow='hidden'}
+function closeAllModals(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow=''}
+function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeAllModals()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllModals()});
+</script>
+</body>
+</html>
