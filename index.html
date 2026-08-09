@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>RGS Labs™ — Technology Ecosystem</title>
+<meta name="description" content="RGS Labs™ is an independent technology ecosystem building AI products, developer tools, digital experiences and experimental technology."/>
+<meta property="og:title" content="RGS Labs™ — Technology Ecosystem"/>
+<meta property="og:description" content="We build technology that moves ideas forward. AI products, developer tools, digital experiences and experimental systems."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://rgslabs.github.io/RGS-Labs/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://rgslabs.github.io/RGS-Labs/"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+/* ── HOME SPECIFIC ── */
+#hero{position:relative}
+#hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to bottom,transparent,var(--bg));z-index:2;pointer-events:none}
+
+/* Pinned Ecosystem Section */
+#ecosystem-pinned{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--bg)}
+.eco-pinned-inner{text-align:center;max-width:900px;padding:0 48px;position:relative;z-index:2}
+.eco-pinned-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:12px}
+.eco-pinned-label::before,.eco-pinned-label::after{content:'';width:32px;height:1px;background:var(--purple);opacity:.4}
+.eco-pinned-title{font-family:var(--font-h);font-size:clamp(36px,6vw,72px);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:48px}
+.eco-pinned-title .word{display:inline-block;overflow:hidden}
+.eco-pinned-title .word-inner{display:inline-block;transform:translateY(100%);opacity:0;transition:all .8s var(--ease-out)}
+.eco-pinned-title.visible .word-inner{transform:translateY(0);opacity:1}
+.eco-pinned-title.visible .word:nth-child(1) .word-inner{transition-delay:.1s}
+.eco-pinned-title.visible .word:nth-child(2) .word-inner{transition-delay:.2s}
+.eco-pinned-title.visible .word:nth-child(3) .word-inner{transition-delay:.3s}
+.eco-pinned-title.visible .word:nth-child(4) .word-inner{transition-delay:.4s}
+.eco-directions{display:flex;flex-direction:column;gap:20px;max-width:500px;margin:0 auto}
+.eco-dir-item{display:flex;align-items:center;gap:20px;padding:20px 28px;border:1px solid var(--border);border-radius:16px;background:var(--bg2);transition:all .4s var(--ease-out);opacity:0;transform:translateX(-30px)}
+.eco-dir-item.visible{opacity:1;transform:translateX(0)}
+.eco-dir-item:nth-child(1).visible{transition-delay:.3s}
+.eco-dir-item:nth-child(2).visible{transition-delay:.45s}
+.eco-dir-item:nth-child(3).visible{transition-delay:.6s}
+.eco-dir-item:hover{border-color:var(--border3);background:var(--bg3);transform:translateX(8px)}
+.eco-dir-icon{width:40px;height:40px;border-radius:10px;background:var(--purple-glow);border:1px solid rgba(168,85,247,.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .3s}
+.eco-dir-item:hover .eco-dir-icon{background:rgba(124,58,237,.2);border-color:rgba(168,85,247,.4);transform:scale(1.1)}
+.eco-dir-text{text-align:left}
+.eco-dir-text strong{font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--text);display:block;margin-bottom:4px}
+.eco-dir-text span{font-size:13px;color:var(--text2);font-weight:300}
+
+/* Currently Building */
+#building{background:var(--bg2);position:relative}
+#building::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(124,58,237,.05),transparent 60%);pointer-events:none}
+.build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:72px}
+.build-card{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:36px;transition:all .5s var(--ease-out);position:relative;overflow:hidden;cursor:none}
+.build-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);opacity:0;transition:opacity .5s}
+.build-card::after{content:'';position:absolute;inset:0;background:radial-gradient(400px circle at var(--spotlight-x,50%) var(--spotlight-y,50%),rgba(168,85,247,.06),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none}
+.build-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-6px);box-shadow:0 24px 64px rgba(0,0,0,.4)}
+.build-card:hover::before{opacity:1}
+.build-card:hover::after{opacity:1}
+.build-status{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px;font-weight:500}
+.build-status .dot{width:6px;height:6px;border-radius:50%;position:relative}
+.build-status .dot.pulse{animation:statusPulse 2s ease-in-out infinite}
+@keyframes statusPulse{0%,100%{box-shadow:0 0 0 0 currentColor}50%{box-shadow:0 0 0 5px transparent}}
+.build-status.live{color:#22c55e}
+.build-status.live .dot{background:#22c55e;color:#22c55e}
+.build-status.dev{color:#f59e0b}
+.build-status.dev .dot{background:#f59e0b;color:#f59e0b}
+.build-status.proto{color:#3b82f6}
+.build-status.proto .dot{background:#3b82f6;color:#3b82f6}
+.build-status.concept{color:var(--text3)}
+.build-status.concept .dot{background:var(--text3);color:var(--text3)}
+.build-card-title{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-.015em}
+.build-card-desc{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:24px;font-weight:300}
+.build-card-link{font-size:13px;color:var(--purple);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .3s var(--ease-out);font-weight:500;position:relative}
+.build-card-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--purple);transition:width .3s var(--ease-out)}
+.build-card-link:hover::after{width:100%}
+.build-card-link .arrow{transition:transform .3s var(--ease-out)}
+.build-card-link:hover .arrow{transform:translateX(4px)}
+
+@media(max-width:900px){
+  .build-grid{grid-template-columns:1fr}
+  .eco-directions{max-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="page-transition" id="pageTransition"><div class="page-transition-logo">RGS<span>.</span>Labs™</div></div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box"><div class="modal-header"><div class="modal-title" id="modalTitle"></div><button class="modal-close" onclick="closeAllModals()">✕</button></div><div id="modalContent"></div></div>
+</div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-text">RGS<span>.</span>Labs<sup class="nav-logo-sup">TM</sup></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active" data-en="Home" data-es="Inicio">Home</a></li>
+    <li><a href="about.html" data-en="About" data-es="About">About</a></li>
+    <li><a href="products.html" data-en="Products" data-es="Products">Products</a></li>
+    <li><a href="projects.html" data-en="Projects" data-es="Projects">Projects</a></li>
+    <li><a href="labs.html" data-en="Labs" data-es="Labs">Labs</a></li>
+    <li><a href="contact.html" data-en="Contact" data-es="Contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button>
+    </div>
+    <a href="https://rgslabs.github.io/RGS-Labs-Landing-Page/" class="nav-cta" target="_blank" rel="noopener" data-en="Work with RGS" data-es="Work with RGS">Work with RGS</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO — CINEMATOGRAPHIC ENTRANCE
+     ════════════════════════════════════════ -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-ambient"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span><span data-en="Technology • AI • Digital Experiences" data-es="Tecnología • IA • Experiencias Digitales">Technology • AI • Digital Experiences</span></div>
+    <h1 class="hero-title">
+      <span class="line"><span class="line-inner" data-en="We Build" data-es="Construimos">We Build</span></span>
+      <span class="line"><span class="line-inner"><em data-text="Digital" data-en="Digital" data-es="Ecosistemas">Digital</em></span></span>
+      <span class="line"><span class="line-inner" data-en="Ecosystems." data-es="Digitales.">Ecosystems.</span></span>
+    </h1>
+    <p class="hero-sub" data-en="RGS Labs™ is an independent technology ecosystem building AI products, developer tools, digital experiences and experimental technology." data-es="RGS Labs™ es un ecosistema tecnológico independiente que construye productos de IA, herramientas para desarrolladores, experiencias digitales y tecnología experimental.">RGS Labs™ is an independent technology ecosystem building AI products, developer tools, digital experiences and experimental technology.</p>
+    <div class="hero-actions">
+      <a href="products.html" class="btn-primary" data-en="Explore the Ecosystem" data-es="Explorar el Ecosistema">Explore the Ecosystem</a>
+      <a href="projects.html" class="btn-ghost" data-en="See what we're building →" data-es="Ver lo que construimos →">See what we're building <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+  <div id="heroVisual">
+    <div class="video-rect-wrap">
+      <div class="video-rect-glow"></div>
+      <div class="video-rect-border"></div>
+      <div class="video-rect-inner">
+        <iframe src="https://www.youtube.com/embed/gI4Nw-c6kk4?autoplay=1&mute=1&loop=1&playlist=gI4Nw-c6kk4&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span class="scroll-text">Scroll</span></div>
+</section>
+
+<!-- ════════════════════════════════════════
+     STATS STRIP
+     ════════════════════════════════════════ -->
+<section id="stats">
+  <div class="stats-strip">
+    <div class="stat-box reveal stagger-1 spotlight-card"><div class="stat-num">5<span>+</span></div><div class="stat-label" data-en="Products Building" data-es="Productos en Desarrollo">Products Building</div></div>
+    <div class="stat-box reveal stagger-2 spotlight-card"><div class="stat-num">3<span>+</span></div><div class="stat-label" data-en="Divisions" data-es="Divisiones">Divisions</div></div>
+    <div class="stat-box reveal stagger-3 spotlight-card"><div class="stat-num stat-accent" style="font-size:28px">AI</div><div class="stat-label" data-en="Native Core" data-es="Núcleo Nativo">Native Core</div></div>
+    <div class="stat-box reveal stagger-4 spotlight-card"><div class="stat-num stat-accent">∞</div><div class="stat-label" data-en="Vision" data-es="Visión">Vision</div></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PINNED ECOSYSTEM — ONE ECOSYSTEM, MULTIPLE DIRECTIONS
+     ════════════════════════════════════════ -->
+<section id="ecosystem-pinned">
+  <div class="eco-pinned-inner">
+    <div class="eco-pinned-label" data-en="The Ecosystem" data-es="El Ecosistema">The Ecosystem</div>
+    <h2 class="eco-pinned-title reveal" id="ecoPinnedTitle">
+      <span class="word"><span class="word-inner">One</span></span>
+      <span class="word"><span class="word-inner">Ecosystem.</span></span>
+      <span class="word"><span class="word-inner">Multiple</span></span>
+      <span class="word"><span class="word-inner">Directions.</span></span>
+    </h2>
+    <div class="eco-directions">
+      <div class="eco-dir-item reveal stagger-1">
+        <div class="eco-dir-icon">⚡</div>
+        <div class="eco-dir-text">
+          <strong data-en="AI & Products" data-es="IA y Productos">AI & Products</strong>
+          <span data-en="Intelligent products and software built around real problems." data-es="Productos inteligentes y software construido alrededor de problemas reales.">Intelligent products and software built around real problems.</span>
+        </div>
+      </div>
+      <div class="eco-dir-item reveal stagger-2">
+        <div class="eco-dir-icon">◈</div>
+        <div class="eco-dir-text">
+          <strong data-en="Digital Experiences" data-es="Experiencias Digitales">Digital Experiences</strong>
+          <span data-en="Websites, landing pages and digital systems for brands and businesses." data-es="Sitios web, landing pages y sistemas digitales para marcas y negocios.">Websites, landing pages and digital systems for brands and businesses.</span>
+        </div>
+      </div>
+      <div class="eco-dir-item reveal stagger-3">
+        <div class="eco-dir-icon">✦</div>
+        <div class="eco-dir-text">
+          <strong data-en="Creative Technology" data-es="Tecnología Creativa">Creative Technology</strong>
+          <span data-en="Games, experiments and unconventional projects exploring what's possible." data-es="Juegos, experimentos y proyectos poco convencionales explorando lo posible.">Games, experiments and unconventional projects exploring what's possible.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CURRENTLY BUILDING
+     ════════════════════════════════════════ -->
+<section id="building">
+  <div class="container">
+    <div class="sec-label reveal" data-en="Currently Building" data-es="En Construcción">Currently Building</div>
+    <h2 class="sec-title reveal" data-en="What's alive right now." data-es="Lo que está vivo ahora.">What's alive right now.</h2>
+    <p class="sec-sub reveal" data-en="These are the products and experiments we're actively developing within the RGS Labs ecosystem." data-es="Estos son los productos y experimentos que estamos desarrollando activamente dentro del ecosistema RGS Labs.">These are the products and experiments we're actively developing within the RGS Labs ecosystem.</p>
+    <div class="build-grid">
+      <div class="build-card reveal stagger-1 spotlight-card">
+        <div class="build-status dev"><span class="dot pulse"></span><span data-en="IN DEVELOPMENT" data-es="EN DESARROLLO">IN DEVELOPMENT</span></div>
+        <div class="build-card-title">DataForge CLI</div>
+        <div class="build-card-desc" data-en="A command-line environment designed to bring AI-powered development intelligence directly into the terminal." data-es="Un entorno de línea de comandos diseñado para llevar inteligencia de desarrollo impulsada por IA directamente a la terminal.">A command-line environment designed to bring AI-powered development intelligence directly into the terminal.</div>
+        <a href="https://rabbitgamesdev.github.io/DataForge-CLI_Website/" target="_blank" rel="noopener" class="build-card-link" data-en="Explore DataForge →" data-es="Explorar DataForge →">Explore DataForge <span class="arrow">→</span></a>
+      </div>
+      <div class="build-card reveal stagger-2 spotlight-card">
+        <div class="build-status live"><span class="dot pulse"></span><span data-en="LIVE — v4.3" data-es="EN VIVO — v4.3">LIVE — v4.3</span></div>
+        <div class="build-card-title">RabAI</div>
+        <div class="build-card-desc" data-en="An AI-powered assistant built as part of the RGS Labs ecosystem. Currently at v4.3 with v5 in active development." data-es="Un asistente impulsado por IA construido como parte del ecosistema RGS Labs. Actualmente en v4.3 con v5 en desarrollo activo.">An AI-powered assistant built as part of the RGS Labs ecosystem. Currently at v4.3 with v5 in active development.</div>
+        <a href="https://rab-ai-repository.vercel.app/" target="_blank" rel="noopener" class="build-card-link" data-en="Explore RabAI →" data-es="Explorar RabAI →">Explore RabAI <span class="arrow">→</span></a>
+      </div>
+      <div class="build-card reveal stagger-3 spotlight-card">
+        <div class="build-status proto"><span class="dot"></span><span data-en="PROTOTYPE" data-es="PROTOTIPO">PROTOTYPE</span></div>
+        <div class="build-card-title">Visual Logo / Image Format</div>
+        <div class="build-card-desc" data-en="A structured format designed to describe visual assets through machine-readable text. Early prototype stage." data-es="Un formato estructurado diseñado para describir activos visuales a través de texto legible por máquinas. Etapa temprana de prototipo.">A structured format designed to describe visual assets through machine-readable text. Early prototype stage.</div>
+        <span class="build-card-link" style="color:var(--text3);cursor:default" data-en="Coming soon" data-es="Próximamente">Coming soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     WHY RGS LABS
+     ════════════════════════════════════════ -->
+<section id="why">
+  <div class="container">
+    <div class="sec-label reveal" data-en="Why RGS Labs" data-es="Por qué RGS Labs">Why RGS Labs</div>
+    <h2 class="sec-title reveal" data-en="The difference<br>is the system." data-es="La diferencia<br>es el sistema.">The difference<br>is the system.</h2>
+    <div class="why-grid">
+      <div class="why-item reveal stagger-1 spotlight-card">
+        <div class="why-num">01</div>
+        <div class="why-title" data-en="Build with Intention" data-es="Construir con Intención">Build with Intention</div>
+        <div class="why-desc" data-en="Everything exists for a reason. Every product, every line of code, every design decision serves a purpose." data-es="Todo existe por una razón. Cada producto, cada línea de código, cada decisión de diseño sirve a un propósito.">Everything exists for a reason. Every product, every line of code, every design decision serves a purpose.</div>
+      </div>
+      <div class="why-item reveal stagger-2 spotlight-card">
+        <div class="why-num">02</div>
+        <div class="why-title" data-en="Technology Should Be Accessible" data-es="La Tecnología Debe Ser Accesible">Technology Should Be Accessible</div>
+        <div class="why-desc" data-en="Powerful digital experiences shouldn't belong exclusively to large companies. Premium quality at accessible scale." data-es="Las experiencias digitales poderosas no deberían pertenecer exclusivamente a grandes empresas. Calidad premium a escala accesible.">Powerful digital experiences shouldn't belong exclusively to large companies. Premium quality at accessible scale.</div>
+      </div>
+      <div class="why-item reveal stagger-3 spotlight-card">
+        <div class="why-num">03</div>
+        <div class="why-title" data-en="Experimentation Creates Better Products" data-es="La Experimentación Crea Mejores Productos">Experimentation Creates Better Products</div>
+        <div class="why-desc" data-en="Not every experiment becomes a product. Every experiment teaches us something that makes the next product better." data-es="No todo experimento se convierte en producto. Cada experimento nos enseña algo que hace el siguiente producto mejor.">Not every experiment becomes a product. Every experiment teaches us something that makes the next product better.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CTA STRIP
+     ════════════════════════════════════════ -->
+<section id="cta-strip">
+  <div class="cta-strip-inner">
+    <div class="sec-label reveal" style="justify-content:center" data-en="Start Today" data-es="Empieza Hoy">Start Today</div>
+    <h2 class="sec-title reveal" data-en="Something worth<br>building?" data-es="¿Algo que valga<br>la pena construir?">Something worth<br>building?</h2>
+    <p class="reveal" data-en="Explore our products, experiments and projects — or work with RGS Labs on your next digital idea." data-es="Explora nuestros productos, experimentos y proyectos — o trabaja con RGS Labs en tu próxima idea digital.">Explore our products, experiments and projects — or work with RGS Labs on your next digital idea.</p>
+    <div class="hero-actions reveal">
+      <a href="projects.html" class="btn-primary" data-en="Explore Projects" data-es="Explorar Proyectos">Explore Projects</a>
+      <a href="https://rgslabs.github.io/RGS-Labs-Landing-Page/" target="_blank" rel="noopener" class="btn-ghost" data-en="Work with RGS Labs →" data-es="Trabajar con RGS Labs →">Work with RGS Labs <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo-text">RGS<span>.</span>Labs™</div>
+      <div class="footer-tagline" data-en="Modern technology ecosystem — AI, automation, branding & digital experiences." data-es="Ecosistema tecnológico moderno — IA, automatización, branding y experiencias digitales.">Modern technology ecosystem — AI, automation, branding & digital experiences.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-link" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://github.com/RGSLabs" target="_blank" rel="noopener" class="social-link" title="GitHub Clients"><svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.276 1.983-.413 3.005-.413s2.048.137 3.006.413c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+        <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link" title="YouTube"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a href="#" class="social-link" title="Instagram (coming soon)" style="opacity:.5"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="#" class="social-link" title="TikTok (coming soon)" style="opacity:.5"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.16c0 2.52-1.14 4.88-3.08 6.45-2.53 2.06-6.04 2.36-8.92.88-2.89-1.48-4.67-4.6-4.53-7.93.13-3.34 2.16-6.28 5.25-7.5 2.43-.95 5.23-.76 7.5.52V.02h.01z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 RGS Labs™. All rights reserved.</div>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Ecosystem" data-es="Ecosistema">Ecosystem</h4>
+      <ul>
+        <li><a href="about.html" data-en="About" data-es="About">About</a></li>
+        <li><a href="products.html" data-en="Products" data-es="Products">Products</a></li>
+        <li><a href="projects.html" data-en="Projects" data-es="Projects">Projects</a></li>
+        <li><a href="labs.html" data-en="Labs" data-es="Labs">Labs</a></li>
+        <li><a href="contact.html" data-en="Contact" data-es="Contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Products" data-es="Productos">Products</h4>
+      <ul>
+        <li><a href="https://rab-ai-repository.vercel.app/" target="_blank" rel="noopener">RabAI</a></li>
+        <li><a href="https://rabbitgamesdev.github.io/DataForge-CLI_Website/" target="_blank" rel="noopener">DataForge CLI</a></li>
+        <li><a href="https://github.com/RabbitGamesDev/DataForge-CLI" target="_blank" rel="noopener">DataForge GitHub</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Legal" data-es="Legal">Legal</h4>
+      <ul>
+        <li><a onclick="openModal('privacy')" data-en="Privacy Policy" data-es="Privacy Policy">Privacy Policy</a></li>
+        <li><a onclick="openModal('terms')" data-en="Terms of Service" data-es="Terms of Service">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+<script>
+// Home-specific: Pinned ecosystem title reveal
+(function(){
+  const title = document.getElementById('ecoPinnedTitle');
+  if(!title) return;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ title.classList.add('visible'); obs.unobserve(title); } });
+  }, { threshold: .3 });
+  obs.observe(title);
+})();
+</script>
+</body>
+</html>
