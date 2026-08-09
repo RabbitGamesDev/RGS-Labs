@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Contact — RGS Labs™</title>
+<meta name="description" content="Get in touch with RGS Labs™. For collaborations, project ideas, or digital experiences."/>
+<meta property="og:title" content="Contact — RGS Labs™"/>
+<meta property="og:description" content="Have something worth building? Tell us what you're working on."/>
+<link rel="canonical" href="https://rgslabs.github.io/RGS-Labs/contact.html"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+/* ── CONTACT SPECIFIC ── */
+.contact-hero{min-height:50vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:140px 48px 60px;position:relative;overflow:hidden}
+.contact-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(124,58,237,.1),transparent 60%);pointer-events:none}
+.contact-hero-content{position:relative;z-index:2;max-width:700px}
+.contact-hero-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:20px}
+.contact-hero-title{font-family:var(--font-h);font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:24px}
+.contact-hero-sub{font-size:clamp(16px,1.8vw,20px);color:var(--text2);max-width:520px;line-height:1.8;margin:0 auto;font-weight:300}
+
+/* Contact Grid */
+#contact-main{background:var(--bg2);position:relative}
+#contact-main::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(124,58,237,.05),transparent 60%);pointer-events:none}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:start;margin-top:64px}
+
+/* Contact Info */
+.contact-info{display:flex;flex-direction:column;gap:32px}
+.contact-info-block{padding:28px;border:1px solid var(--border);border-radius:20px;background:var(--bg);transition:all .4s var(--ease-out)}
+.contact-info-block:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px)}
+.contact-info-block-title{font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:-.01em}
+.contact-info-block-text{font-size:14px;color:var(--text2);line-height:1.75;font-weight:300;margin-bottom:16px}
+.contact-info-block-link{font-size:14px;color:var(--purple);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .3s var(--ease-out);font-weight:500;position:relative}
+.contact-info-block-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--purple);transition:width .3s var(--ease-out)}
+.contact-info-block-link:hover::after{width:100%}
+.contact-info-block-link .arrow{transition:transform .3s var(--ease-out)}
+.contact-info-block-link:hover .arrow{transform:translateX(4px)}
+
+/* Contact Form */
+.contact-form{background:var(--bg);border:1px solid var(--border);border-radius:24px;padding:48px;position:relative;overflow:hidden}
+.contact-form::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);opacity:.6}
+.form-group{margin-bottom:24px}
+.form-label{display:block;font-size:12px;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.form-input{width:100%;padding:14px 18px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-family:var(--font-b);font-size:15px;transition:all .3s var(--ease-out);outline:none}
+.form-input::placeholder{color:var(--text4)}
+.form-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,85,247,.1)}
+.form-input:hover{border-color:var(--border3)}
+textarea.form-input{min-height:140px;resize:vertical;line-height:1.7}
+.form-submit{width:100%;padding:16px;background:var(--purple2);color:#fff;border:none;border-radius:12px;font-family:var(--font-b);font-size:15px;font-weight:500;cursor:none;transition:all .35s var(--ease-out);position:relative;overflow:hidden;letter-spacing:.02em}
+.form-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);opacity:0;transition:opacity .3s}
+.form-submit:hover::before{opacity:1}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(124,58,237,.45)}
+.form-submit:active{transform:translateY(0) scale(.98)}
+.form-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.form-status{margin-top:16px;padding:14px 18px;border-radius:12px;font-size:14px;font-weight:500;text-align:center;display:none}
+.form-status.success{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22c55e}
+.form-status.error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444}
+.form-status.visible{display:block}
+
+/* Social Connect */
+#social-connect{background:var(--bg);padding:80px 48px;text-align:center}
+.social-connect-inner{max-width:600px;margin:0 auto}
+.social-connect-title{font-family:var(--font-h);font-size:24px;font-weight:700;color:var(--text);margin-bottom:16px;letter-spacing:-.01em}
+.social-connect-desc{font-size:15px;color:var(--text2);margin-bottom:32px;font-weight:300;line-height:1.7}
+.social-connect-grid{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.social-connect-link{padding:14px 24px;border:1px solid var(--border2);border-radius:12px;background:var(--bg2);color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:all .35s var(--ease-out);display:inline-flex;align-items:center;gap:8px;cursor:none}
+.social-connect-link:hover{border-color:var(--purple);color:var(--text);background:var(--bg3);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.social-connect-link svg{width:18px;height:18px;fill:currentColor}
+
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  .contact-form{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="page-transition" id="pageTransition"><div class="page-transition-logo">RGS<span>.</span>Labs™</div></div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box"><div class="modal-header"><div class="modal-title" id="modalTitle"></div><button class="modal-close" onclick="closeAllModals()">✕</button></div><div id="modalContent"></div></div>
+</div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-text">RGS<span>.</span>Labs<sup class="nav-logo-sup">TM</sup></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+    <li><a href="about.html" data-en="About" data-es="About">About</a></li>
+    <li><a href="products.html" data-en="Products" data-es="Products">Products</a></li>
+    <li><a href="projects.html" data-en="Projects" data-es="Projects">Projects</a></li>
+    <li><a href="labs.html" data-en="Labs" data-es="Labs">Labs</a></li>
+    <li><a href="contact.html" class="active" data-en="Contact" data-es="Contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button>
+    </div>
+    <a href="https://rgslabs.github.io/RGS-Labs-Landing-Page/" class="nav-cta" target="_blank" rel="noopener" data-en="Work with RGS" data-es="Work with RGS">Work with RGS</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     CONTACT HERO
+     ════════════════════════════════════════ -->
+<section class="contact-hero">
+  <div class="contact-hero-content">
+    <div class="contact-hero-label reveal" data-en="Contact" data-es="Contacto">Contact</div>
+    <h1 class="contact-hero-title reveal" data-en="Have something<br>worth building?" data-es="¿Tienes algo que<br>valga la pena construir?">Have something<br>worth building?</h1>
+    <p class="contact-hero-sub reveal" data-en="Tell us what you're working on. For collaborations, project ideas, or digital experiences for your brand." data-es="Cuéntanos en qué estás trabajando. Para colaboraciones, ideas de proyectos, o experiencias digitales para tu marca.">Tell us what you're working on. For collaborations, project ideas, or digital experiences for your brand.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CONTACT MAIN
+     ════════════════════════════════════════ -->
+<section id="contact-main">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- Contact Info -->
+      <div class="contact-info reveal">
+        <div class="contact-info-block">
+          <div class="contact-info-block-title" data-en="Work with RGS Labs" data-es="Trabajar con RGS Labs">Work with RGS Labs</div>
+          <div class="contact-info-block-text" data-en="Websites, landing pages and digital experiences for businesses and brands. Visit our commercial landing page for service details." data-es="Sitios web, landing pages y experiencias digitales para negocios y marcas. Visita nuestra landing comercial para detalles de servicios.">Websites, landing pages and digital experiences for businesses and brands. Visit our commercial landing page for service details.</div>
+          <a href="https://rgslabs.github.io/RGS-Labs-Landing-Page/" target="_blank" rel="noopener" class="contact-info-block-link" data-en="Explore Digital Services →" data-es="Explorar Servicios Digitales →">Explore Digital Services <span class="arrow">→</span></a>
+        </div>
+        <div class="contact-info-block">
+          <div class="contact-info-block-title" data-en="Build Something with Us" data-es="Construir Algo con Nosotros">Build Something with Us</div>
+          <div class="contact-info-block-text" data-en="For collaborations, project ideas, technical discussions, or just to connect. Use the form or email us directly." data-es="Para colaboraciones, ideas de proyectos, discusiones técnicas, o solo para conectar. Usa el formulario o escríbenos directamente.">For collaborations, project ideas, technical discussions, or just to connect. Use the form or email us directly.</div>
+          <a href="mailto:rgslabs.contact@gmail.com" class="contact-info-block-link">rgslabs.contact@gmail.com <span class="arrow">→</span></a>
+        </div>
+        <div class="contact-info-block">
+          <div class="contact-info-block-title" data-en="Location" data-es="Ubicación">Location</div>
+          <div class="contact-info-block-text">Xalapa, Veracruz, México<br><span style="color:var(--text3)" data-en="Remote / Freelance / Part-time" data-es="Remoto / Freelance / Medio tiempo">Remote / Freelance / Part-time</span></div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form reveal stagger-2">
+        <form id="contactForm" action="https://formspree.io/f/xnqevwzw" method="POST">
+          <div class="form-group">
+            <label class="form-label" for="name" data-en="Name" data-es="Nombre">Name</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email" data-en="Email" data-es="Correo">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="subject" data-en="Subject" data-es="Asunto">Subject</label>
+            <input type="text" id="subject" name="subject" class="form-input" placeholder="What is this about?" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message" data-en="Message" data-es="Mensaje">Message</label>
+            <textarea id="message" name="message" class="form-input" placeholder="Tell us what you're working on..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" data-en="Send Message" data-es="Enviar Mensaje">Send Message</button>
+          <div class="form-status success" id="formSuccess" data-en="Message sent successfully. We'll get back to you soon." data-es="Mensaje enviado exitosamente. Te responderemos pronto.">Message sent successfully. We'll get back to you soon.</div>
+          <div class="form-status error" id="formError" data-en="Something went wrong. Please try again or email us directly." data-es="Algo salió mal. Por favor intenta de nuevo o escríbenos directamente.">Something went wrong. Please try again or email us directly.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     SOCIAL CONNECT
+     ════════════════════════════════════════ -->
+<section id="social-connect">
+  <div class="social-connect-inner">
+    <div class="social-connect-title reveal" data-en="Connect with RGS Labs" data-es="Conectar con RGS Labs">Connect with RGS Labs</div>
+    <div class="social-connect-desc reveal" data-en="Follow our journey across platforms. We're building in public." data-es="Sigue nuestro viaje a través de plataformas. Estamos construyendo en público.">Follow our journey across platforms. We're building in public.</div>
+    <div class="social-connect-grid reveal">
+      <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-connect-link">
+        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub Tools
+      </a>
+      <a href="https://github.com/RGSLabs" target="_blank" rel="noopener" class="social-connect-link">
+        <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.276 1.983-.413 3.005-.413s2.048.137 3.006.413c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        GitHub Clients
+      </a>
+      <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-connect-link">
+        <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        YouTube
+      </a>
+      <a href="https://gamejolt.com/@RGS_Labs" target="_blank" rel="noopener" class="social-connect-link">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.5 17.5h-8v-7h8v7zm0-9h-8v-2h8v2zm5 9h-3v-4h-2v4h-1v-6h6v6zm0-8h-6v-3h6v3z"/></svg>
+        GameJolt
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo-text">RGS<span>.</span>Labs™</div>
+      <div class="footer-tagline" data-en="Modern technology ecosystem — AI, automation, branding & digital experiences." data-es="Ecosistema tecnológico moderno — IA, automatización, branding y experiencias digitales.">Modern technology ecosystem — AI, automation, branding & digital experiences.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-link" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://github.com/RGSLabs" target="_blank" rel="noopener" class="social-link" title="GitHub Clients"><svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.276 1.983-.413 3.005-.413s2.048.137 3.006.413c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+        <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link" title="YouTube"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a href="#" class="social-link" title="Instagram (coming soon)" style="opacity:.5"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="#" class="social-link" title="TikTok (coming soon)" style="opacity:.5"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.16c0 2.52-1.14 4.88-3.08 6.45-2.53 2.06-6.04 2.36-8.92.88-2.89-1.48-4.67-4.6-4.53-7.93.13-3.34 2.16-6.28 5.25-7.5 2.43-.95 5.23-.76 7.5.52V.02h.01z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 RGS Labs™. All rights reserved.</div>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Ecosystem" data-es="Ecosistema">Ecosystem</h4>
+      <ul>
+        <li><a href="about.html" data-en="About" data-es="About">About</a></li>
+        <li><a href="products.html" data-en="Products" data-es="Products">Products</a></li>
+        <li><a href="projects.html" data-en="Projects" data-es="Projects">Projects</a></li>
+        <li><a href="labs.html" data-en="Labs" data-es="Labs">Labs</a></li>
+        <li><a href="contact.html" data-en="Contact" data-es="Contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Products" data-es="Productos">Products</h4>
+      <ul>
+        <li><a href="https://rab-ai-repository.vercel.app/" target="_blank" rel="noopener">RabAI</a></li>
+        <li><a href="https://rabbitgamesdev.github.io/DataForge-CLI_Website/" target="_blank" rel="noopener">DataForge CLI</a></li>
+        <li><a href="https://github.com/RabbitGamesDev/DataForge-CLI" target="_blank" rel="noopener">DataForge GitHub</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Legal" data-es="Legal">Legal</h4>
+      <ul>
+        <li><a onclick="openModal('privacy')" data-en="Privacy Policy" data-es="Privacy Policy">Privacy Policy</a></li>
+        <li><a onclick="openModal('terms')" data-en="Terms of Service" data-es="Terms of Service">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+<script>
+// Contact Form Handling
+(function(){
+  const form = document.getElementById('contactForm');
+  const successMsg = document.getElementById('formSuccess');
+  const errorMsg = document.getElementById('formError');
+  const submitBtn = form.querySelector('.form-submit');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = lang === 'es' ? 'Enviando...' : 'Sending...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if(response.ok){
+        successMsg.classList.add('visible');
+        errorMsg.classList.remove('visible');
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch(err){
+      successMsg.classList.remove('visible');
+      errorMsg.classList.add('visible');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = lang === 'es' ? 'Enviar Mensaje' : 'Send Message';
+    }
+  });
+})();
+</script>
+</body>
+</html>

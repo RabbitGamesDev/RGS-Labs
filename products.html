@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Products — RGS Labs™</title>
+<meta name="description" content="Products we're building at RGS Labs™ — AI tools, developer utilities and experimental technology."/>
+<meta property="og:title" content="Products — RGS Labs™"/>
+<meta property="og:description" content="RabAI, DataForge CLI, Visual Logo Format and LUNA — the products of the RGS Labs ecosystem."/>
+<link rel="canonical" href="https://rgslabs.github.io/RGS-Labs/products.html"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+/* ── PRODUCTS SPECIFIC ── */
+.products-hero{min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:140px 48px 80px;position:relative;overflow:hidden}
+.products-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(124,58,237,.1),transparent 60%);pointer-events:none}
+.products-hero-content{position:relative;z-index:2;max-width:800px}
+.products-hero-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:20px}
+.products-hero-title{font-family:var(--font-h);font-size:clamp(36px,6vw,72px);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:28px}
+.products-hero-sub{font-size:clamp(16px,1.8vw,20px);color:var(--text2);max-width:560px;line-height:1.8;margin:0 auto;font-weight:300}
+
+/* 3D Tilt Product Cards */
+#products-list{background:var(--bg2);position:relative}
+#products-list::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(124,58,237,.05),transparent 60%);pointer-events:none}
+.products-container{max-width:900px;margin:0 auto;padding:0 48px}
+.product-card{background:var(--bg);border:1px solid var(--border);border-radius:24px;padding:48px;transition:all .5s var(--ease-out);position:relative;overflow:hidden;margin-bottom:32px;cursor:none;transform-style:preserve-3d;perspective:1000px}
+.product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);opacity:0;transition:opacity .5s}
+.product-card::after{content:'';position:absolute;inset:0;background:radial-gradient(600px circle at var(--spotlight-x,50%) var(--spotlight-y,50%),rgba(168,85,247,.08),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none}
+.product-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-4px);box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.product-card:hover::before{opacity:1}
+.product-card:hover::after{opacity:1}
+.product-card-inner{position:relative;z-index:2;transform-style:preserve-3d;transition:transform .15s ease-out}
+.product-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+.product-info{flex:1}
+.product-status{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;font-weight:500;padding:6px 14px;border-radius:100px;border:1px solid var(--border2);background:var(--bg2)}
+.product-status .dot{width:6px;height:6px;border-radius:50%;position:relative}
+.product-status .dot.pulse{animation:statusPulse 2s ease-in-out infinite}
+.product-status.live{color:#22c55e;border-color:rgba(34,197,94,.2);background:rgba(34,197,94,.05)}
+.product-status.live .dot{background:#22c55e}
+.product-status.dev{color:#f59e0b;border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.05)}
+.product-status.dev .dot{background:#f59e0b}
+.product-status.proto{color:#3b82f6;border-color:rgba(59,130,246,.2);background:rgba(59,130,246,.05)}
+.product-status.proto .dot{background:#3b82f6}
+.product-status.concept{color:var(--text3);border-color:var(--border2)}
+.product-status.concept .dot{background:var(--text3)}
+.product-title{font-family:var(--font-h);font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--text);letter-spacing:-.03em;margin-bottom:8px}
+.product-type{font-size:13px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.product-desc{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:28px;font-weight:300;max-width:600px}
+.product-actions{display:flex;gap:14px;flex-wrap:wrap}
+.product-link-primary{background:var(--purple2);color:#fff;padding:12px 28px;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease-out);cursor:none;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.08)}
+.product-link-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,58,237,.4)}
+.product-link-secondary{border:1px solid var(--border2);color:var(--text2);padding:12px 28px;border-radius:10px;font-size:14px;text-decoration:none;font-family:var(--font-b);transition:all .3s var(--ease-out);cursor:none;background:var(--bg2);display:inline-flex;align-items:center;gap:6px}
+.product-link-secondary:hover{border-color:var(--border3);color:var(--text);background:var(--bg3)}
+.product-preview{width:200px;height:140px;border-radius:16px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:48px;flex-shrink:0;position:relative;overflow:hidden;transition:all .4s var(--ease-out)}
+.product-card:hover .product-preview{border-color:var(--border3);transform:scale(1.02);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.product-preview-glow{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(168,85,247,.15),transparent 70%);opacity:0;transition:opacity .4s}
+.product-card:hover .product-preview-glow{opacity:1}
+.product-meta{display:flex;gap:24px;margin-top:24px;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap}
+.product-meta-item{display:flex;flex-direction:column;gap:4px}
+.product-meta-label{font-size:11px;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.product-meta-value{font-size:13px;color:var(--text2);font-weight:400}
+
+/* Stacked Cards Effect */
+.product-card.stacked{position:sticky;top:100px;margin-bottom:40px;transform-origin:center top}
+.product-card.stacked:nth-child(1){z-index:4}
+.product-card.stacked:nth-child(2){z-index:3;transform:scale(.98);opacity:.95}
+.product-card.stacked:nth-child(3){z-index:2;transform:scale(.96);opacity:.9}
+.product-card.stacked:nth-child(4){z-index:1;transform:scale(.94);opacity:.85}
+
+@media(max-width:768px){
+  .product-header{flex-direction:column}
+  .product-preview{width:100%;height:180px}
+  .products-container{padding:0 20px}
+  .product-card{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="page-transition" id="pageTransition"><div class="page-transition-logo">RGS<span>.</span>Labs™</div></div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box"><div class="modal-header"><div class="modal-title" id="modalTitle"></div><button class="modal-close" onclick="closeAllModals()">✕</button></div><div id="modalContent"></div></div>
+</div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-text">RGS<span>.</span>Labs<sup class="nav-logo-sup">TM</sup></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
+    <li><a href="about.html" data-en="About" data-es="About">About</a></li>
+    <li><a href="products.html" class="active" data-en="Products" data-es="Products">Products</a></li>
+    <li><a href="projects.html" data-en="Projects" data-es="Projects">Projects</a></li>
+    <li><a href="labs.html" data-en="Labs" data-es="Labs">Labs</a></li>
+    <li><a href="contact.html" data-en="Contact" data-es="Contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button>
+    </div>
+    <a href="https://rgslabs.github.io/RGS-Labs-Landing-Page/" class="nav-cta" target="_blank" rel="noopener" data-en="Work with RGS" data-es="Work with RGS">Work with RGS</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     PRODUCTS HERO
+     ════════════════════════════════════════ -->
+<section class="products-hero">
+  <div class="products-hero-content">
+    <div class="products-hero-label reveal" data-en="Products" data-es="Productos">Products</div>
+    <h1 class="products-hero-title reveal" data-en="Products we're<br>building." data-es="Productos que<br>estamos construyendo.">Products we're<br>building.</h1>
+    <p class="products-hero-sub reveal" data-en="Not a portfolio. These are the products and tools we're actively developing within the RGS Labs ecosystem." data-es="No es un portafolio. Estos son los productos y herramientas que estamos desarrollando activamente dentro del ecosistema RGS Labs.">Not a portfolio. These are the products and tools we're actively developing within the RGS Labs ecosystem.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PRODUCTS LIST — 3D TILT CARDS
+     ════════════════════════════════════════ -->
+<section id="products-list">
+  <div class="products-container">
+    <!-- RabAI -->
+    <div class="product-card reveal stagger-1" data-tilt>
+      <div class="product-card-inner">
+        <div class="product-header">
+          <div class="product-info">
+            <div class="product-status live"><span class="dot pulse"></span><span data-en="LIVE — v4.3 / v5 IN DEVELOPMENT" data-es="EN VIVO — v4.3 / v5 EN DESARROLLO">LIVE — v4.3 / v5 IN DEVELOPMENT</span></div>
+            <div class="product-title">RabAI</div>
+            <div class="product-type" data-en="AI Assistant for IndieDevs" data-es="Asistente de IA para IndieDevs">AI Assistant for IndieDevs</div>
+          </div>
+          <div class="product-preview">
+            <div class="product-preview-glow"></div>
+            <span style="position:relative;z-index:2">🤖</span>
+          </div>
+        </div>
+        <div class="product-desc" data-en="An AI-powered assistant built as part of the RGS Labs ecosystem. Designed to help independent developers with code, architecture decisions, debugging and creative problem-solving. Currently at v4.3 with a major v5 rewrite in active development." data-es="Un asistente impulsado por IA construido como parte del ecosistema RGS Labs. Diseñado para ayudar a desarrolladores independientes con código, decisiones de arquitectura, depuración y resolución creativa de problemas. Actualmente en v4.3 con una reescritura mayor v5 en desarrollo activo.">An AI-powered assistant built as part of the RGS Labs ecosystem. Designed to help independent developers with code, architecture decisions, debugging and creative problem-solving. Currently at v4.3 with a major v5 rewrite in active development.</div>
+        <div class="product-actions">
+          <a href="https://rab-ai-repository.vercel.app/" target="_blank" rel="noopener" class="product-link-primary" data-en="Explore RabAI →" data-es="Explorar RabAI →">Explore RabAI <span class="btn-arrow">→</span></a>
+        </div>
+        <div class="product-meta">
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Status" data-es="Estado">Status</div>
+            <div class="product-meta-value" data-en="v4.3 Live / v5 Dev" data-es="v4.3 En Vivo / v5 Dev">v4.3 Live / v5 Dev</div>
+          </div>
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Type" data-es="Tipo">Type</div>
+            <div class="product-meta-value">AI Assistant</div>
+          </div>
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Audience" data-es="Audiencia">Audience</div>
+            <div class="product-meta-value" data-en="Indie Developers" data-es="Desarrolladores Indie">Indie Developers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DataForge CLI -->
+    <div class="product-card reveal stagger-2" data-tilt>
+      <div class="product-card-inner">
+        <div class="product-header">
+          <div class="product-info">
+            <div class="product-status live"><span class="dot pulse"></span><span data-en="LIVE — v2.0 LAUNCH UPCOMING" data-es="EN VIVO — v2.0 PRÓXIMO LANZAMIENTO">LIVE — v2.0 LAUNCH UPCOMING</span></div>
+            <div class="product-title">DataForge CLI</div>
+            <div class="product-type" data-en="Developer Tool" data-es="Herramienta para Desarrolladores">Developer Tool</div>
+          </div>
+          <div class="product-preview">
+            <div class="product-preview-glow"></div>
+            <span style="position:relative;z-index:2">⚡</span>
+          </div>
+        </div>
+        <div class="product-desc" data-en="A command-line environment designed to bring AI-powered development intelligence directly into the terminal. DataForge CLI integrates with your workflow to accelerate coding, debugging and system architecture decisions without leaving the command line." data-es="Un entorno de línea de comandos diseñado para llevar inteligencia de desarrollo impulsada por IA directamente a la terminal. DataForge CLI se integra con tu flujo de trabajo para acelerar la codificación, depuración y decisiones de arquitectura de sistemas sin salir de la línea de comandos.">A command-line environment designed to bring AI-powered development intelligence directly into the terminal. DataForge CLI integrates with your workflow to accelerate coding, debugging and system architecture decisions without leaving the command line.</div>
+        <div class="product-actions">
+          <a href="https://rabbitgamesdev.github.io/DataForge-CLI_Website/" target="_blank" rel="noopener" class="product-link-primary" data-en="Explore DataForge →" data-es="Explorar DataForge →">Explore DataForge <span class="btn-arrow">→</span></a>
+          <a href="https://github.com/RabbitGamesDev/DataForge-CLI" target="_blank" rel="noopener" class="product-link-secondary" data-en="GitHub →" data-es="GitHub →">GitHub <span class="btn-arrow">→</span></a>
+        </div>
+        <div class="product-meta">
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Status" data-es="Estado">Status</div>
+            <div class="product-meta-value" data-en="Live / v2.0 Soon" data-es="En Vivo / v2.0 Pronto">Live / v2.0 Soon</div>
+          </div>
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Type" data-es="Tipo">Type</div>
+            <div class="product-meta-value">CLI Tool</div>
+          </div>
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Platform" data-es="Plataforma">Platform</div>
+            <div class="product-meta-value">Terminal / CLI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Logo Format -->
+    <div class="product-card reveal stagger-3" data-tilt>
+      <div class="product-card-inner">
+        <div class="product-header">
+          <div class="product-info">
+            <div class="product-status proto"><span class="dot"></span><span data-en="PROTOTYPE" data-es="PROTOTIPO">PROTOTYPE</span></div>
+            <div class="product-title">Visual Logo / Image Format</div>
+            <div class="product-type" data-en="AI Visual Representation" data-es="Representación Visual de IA">AI Visual Representation</div>
+          </div>
+          <div class="product-preview">
+            <div class="product-preview-glow"></div>
+            <span style="position:relative;z-index:2">◈</span>
+          </div>
+        </div>
+        <div class="product-desc" data-en="A structured format designed to describe visual assets through machine-readable text. This prototype explores how AI can understand, generate and manipulate visual branding elements using structured text descriptions rather than traditional image files." data-es="Un formato estructurado diseñado para describir activos visuales a través de texto legible por máquinas. Este prototipo explora cómo la IA puede entender, generar y manipular elementos de marca visual usando descripciones de texto estructuradas en lugar de archivos de imagen tradicionales.">A structured format designed to describe visual assets through machine-readable text. This prototype explores how AI can understand, generate and manipulate visual branding elements using structured text descriptions rather than traditional image files.</div>
+        <div class="product-actions">
+          <span class="product-link-secondary" style="opacity:.5;cursor:default" data-en="Coming Soon" data-es="Próximamente">Coming Soon</span>
+        </div>
+        <div class="product-meta">
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Status" data-es="Estado">Status</div>
+            <div class="product-meta-value">Prototype</div>
+          </div>
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Type" data-es="Tipo">Type</div>
+            <div class="product-meta-value" data-en="Format / Standard" data-es="Formato / Estándar">Format / Standard</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LUNA -->
+    <div class="product-card reveal stagger-4" data-tilt>
+      <div class="product-card-inner">
+        <div class="product-header">
+          <div class="product-info">
+            <div class="product-status concept"><span class="dot"></span><span data-en="CONCEPT" data-es="CONCEPTO">CONCEPT</span></div>
+            <div class="product-title">LUNA</div>
+            <div class="product-type" data-en="AI Platform for Business" data-es="Plataforma de IA para Negocios">AI Platform for Business</div>
+          </div>
+          <div class="product-preview">
+            <div class="product-preview-glow"></div>
+            <span style="position:relative;z-index:2">🌙</span>
+          </div>
+        </div>
+        <div class="product-desc" data-en="A conceptual AI platform designed for business applications. LUNA represents the next evolution of the RGS Labs product line — bringing enterprise-grade AI capabilities to small and medium businesses at accessible scale. Currently in early concept and research phase." data-es="Una plataforma de IA conceptual diseñada para aplicaciones empresariales. LUNA representa la siguiente evolución de la línea de productos RGS Labs — trayendo capacidades de IA de nivel empresarial a pequeñas y medianas empresas a escala accesible. Actualmente en fase temprana de concepto e investigación.">A conceptual AI platform designed for business applications. LUNA represents the next evolution of the RGS Labs product line — bringing enterprise-grade AI capabilities to small and medium businesses at accessible scale. Currently in early concept and research phase.</div>
+        <div class="product-actions">
+          <span class="product-link-secondary" style="opacity:.5;cursor:default" data-en="In Research" data-es="En Investigación">In Research</span>
+        </div>
+        <div class="product-meta">
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Status" data-es="Estado">Status</div>
+            <div class="product-meta-value">Concept</div>
+          </div>
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Type" data-es="Tipo">Type</div>
+            <div class="product-meta-value">AI Platform</div>
+          </div>
+          <div class="product-meta-item">
+            <div class="product-meta-label" data-en="Target" data-es="Objetivo">Target</div>
+            <div class="product-meta-value" data-en="SMB / Business" data-es="PYME / Negocios">SMB / Business</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CTA STRIP
+     ════════════════════════════════════════ -->
+<section id="cta-strip">
+  <div class="cta-strip-inner">
+    <div class="sec-label reveal" style="justify-content:center" data-en="See More" data-es="Ver Más">See More</div>
+    <h2 class="sec-title reveal" data-en="Want to see<br>what we've built?" data-es="¿Quieres ver<br>lo que hemos construido?">Want to see<br>what we've built?</h2>
+    <p class="reveal" data-en="Explore the projects we've built for clients and the experiments we've created within the RGS Labs ecosystem." data-es="Explora los proyectos que hemos construido para clientes y los experimentos que hemos creado dentro del ecosistema RGS Labs.">Explore the projects we've built for clients and the experiments we've created within the RGS Labs ecosystem.</p>
+    <div class="hero-actions reveal">
+      <a href="projects.html" class="btn-primary" data-en="View Projects" data-es="Ver Proyectos">View Projects</a>
+      <a href="labs.html" class="btn-ghost" data-en="Explore Labs →" data-es="Explorar Labs →">Explore Labs <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo-text">RGS<span>.</span>Labs™</div>
+      <div class="footer-tagline" data-en="Modern technology ecosystem — AI, automation, branding & digital experiences." data-es="Ecosistema tecnológico moderno — IA, automatización, branding y experiencias digitales.">Modern technology ecosystem — AI, automation, branding & digital experiences.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/RabbitGamesDev" target="_blank" rel="noopener" class="social-link" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://github.com/RGSLabs" target="_blank" rel="noopener" class="social-link" title="GitHub Clients"><svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.276 1.983-.413 3.005-.413s2.048.137 3.006.413c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+        <a href="https://www.youtube.com/@RGS_Labs" target="_blank" rel="noopener" class="social-link" title="YouTube"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a href="#" class="social-link" title="Instagram (coming soon)" style="opacity:.5"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="#" class="social-link" title="TikTok (coming soon)" style="opacity:.5"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.16c0 2.52-1.14 4.88-3.08 6.45-2.53 2.06-6.04 2.36-8.92.88-2.89-1.48-4.67-4.6-4.53-7.93.13-3.34 2.16-6.28 5.25-7.5 2.43-.95 5.23-.76 7.5.52V.02h.01z"/></svg></a>
+      </div>
+      <div class="footer-copy">© 2026 RGS Labs™. All rights reserved.</div>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Ecosystem" data-es="Ecosistema">Ecosystem</h4>
+      <ul>
+        <li><a href="about.html" data-en="About" data-es="About">About</a></li>
+        <li><a href="products.html" data-en="Products" data-es="Products">Products</a></li>
+        <li><a href="projects.html" data-en="Projects" data-es="Projects">Projects</a></li>
+        <li><a href="labs.html" data-en="Labs" data-es="Labs">Labs</a></li>
+        <li><a href="contact.html" data-en="Contact" data-es="Contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Products" data-es="Productos">Products</h4>
+      <ul>
+        <li><a href="https://rab-ai-repository.vercel.app/" target="_blank" rel="noopener">RabAI</a></li>
+        <li><a href="https://rabbitgamesdev.github.io/DataForge-CLI_Website/" target="_blank" rel="noopener">DataForge CLI</a></li>
+        <li><a href="https://github.com/RabbitGamesDev/DataForge-CLI" target="_blank" rel="noopener">DataForge GitHub</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Legal" data-es="Legal">Legal</h4>
+      <ul>
+        <li><a onclick="openModal('privacy')" data-en="Privacy Policy" data-es="Privacy Policy">Privacy Policy</a></li>
+        <li><a onclick="openModal('terms')" data-en="Terms of Service" data-es="Terms of Service">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+<script>
+// 3D Tilt Effect for Product Cards
+(function(){
+  const cards = document.querySelectorAll('[data-tilt]');
+  cards.forEach(card => {
+    const inner = card.querySelector('.product-card-inner');
+    if(!inner) return;
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const dx = (x - cx) / cx;
+      const dy = (y - cy) / cy;
+      const rotateX = dy * -4;
+      const rotateY = dx * 4;
+      inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+      // Move inner content slightly opposite
+      const content = inner.querySelectorAll('.product-title, .product-desc, .product-actions');
+      content.forEach(el => {
+        el.style.transform = `translateX(${dx * -3}px) translateY(${dy * -3}px)`;
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      inner.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+      const content = inner.querySelectorAll('.product-title, .product-desc, .product-actions');
+      content.forEach(el => { el.style.transform = 'translateX(0) translateY(0)'; });
+    });
+  });
+})();
+</script>
+</body>
+</html>
